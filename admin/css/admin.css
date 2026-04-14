@@ -32,6 +32,18 @@ body {
 a { text-decoration: none; color: inherit; }
 ::selection { background: rgba(184,151,106,0.35); color: #fff; }
 
+/* Custom scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(184,151,106,0.25) transparent;
+}
+*::-webkit-scrollbar { width: 6px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb {
+  background: rgba(184,151,106,0.25); border-radius: 3px;
+}
+*::-webkit-scrollbar-thumb:hover { background: rgba(184,151,106,0.45); }
+
 /* ── LOGIN PAGE ────────────────────────────────────────── */
 
 .login-page {
@@ -353,11 +365,51 @@ tbody tr:last-child td { border-bottom: none; }
 /* ── RESPONSIVE ─────────────────────────────────────────── */
 
 @media (max-width: 768px) {
-  .admin-header { padding: 14px 20px; }
-  .admin-body { padding: 24px 16px; }
-  .dash-stats { flex-direction: column; }
+  /* Header */
+  .admin-header { padding: 12px 16px; }
+  .admin-header-logo { font-size: 15px; letter-spacing: 2px; }
+  .admin-header-logo span { display: none; }
+  .admin-header-right { gap: 8px; }
+  .admin-header-right .btn { padding: 6px 10px; font-size: 9px; letter-spacing: 1px; }
+  .admin-header-user { display: none; }
+
+  /* Body */
+  .admin-body { padding: 20px 16px; }
+
+  /* Dashboard */
+  .dash-top { flex-direction: column; align-items: stretch; gap: 16px; }
+  .dash-top .btn { text-align: center; }
+  .dash-title { font-size: 24px; }
+  .dash-stats { flex-direction: column; gap: 12px; }
+  .dash-stat { padding: 18px 20px; }
+  .dash-stat-num { font-size: 28px; }
+
+  /* Table */
+  .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .table-toolbar { flex-wrap: wrap; padding: 16px; gap: 8px; }
+  .table-search { min-width: 0; flex: 1 1 100%; }
+  .table-filter { flex: 1 1 100%; }
+  table { min-width: 600px; }
+  thead th { padding: 12px 16px; font-size: 9px; }
+  tbody td { padding: 14px 16px; font-size: 13px; }
+  .td-title { max-width: 160px; font-size: 13px; }
+  .td-actions { flex-direction: column; gap: 6px; }
+  .td-actions button { padding: 8px 12px; font-size: 11px; }
+
+  /* Editor */
+  .editor-top { flex-direction: column; align-items: stretch; gap: 12px; }
+  .editor-title { font-size: 22px; }
   .editor-row { grid-template-columns: 1fr; }
-  .editor-card { padding: 24px 20px; }
-  .table-toolbar { flex-wrap: wrap; }
-  .td-title { max-width: 200px; }
+  .editor-card { padding: 24px 18px; }
+  .editor-actions { flex-direction: column; }
+  .editor-actions .btn { text-align: center; justify-content: center; }
+
+  /* Login */
+  .login-card { padding: 28px 20px; }
+  .login-logo { font-size: 20px; letter-spacing: 3px; }
+  .login-sub { font-size: 10px; margin-bottom: 32px; }
+
+  /* Dialog */
+  .dialog-box { padding: 24px 20px; width: 95%; }
+  .dialog-actions { flex-direction: column; }
 }
