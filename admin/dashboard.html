@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Mamus & Bomfim</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/admin/css/admin.css">
+</head>
+<body>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Confirm Delete Dialog -->
+  <div class="dialog-backdrop" id="confirm-dialog">
+    <div class="dialog-box">
+      <h3>Excluir Publicação</h3>
+      <p>Tem certeza que deseja excluir "<strong id="dialog-title"></strong>"? Esta ação não pode ser desfeita.</p>
+      <div class="dialog-actions">
+        <button class="btn btn-outline btn-sm" onclick="closeDialog()">Cancelar</button>
+        <button class="btn btn-danger btn-sm" onclick="executeDelete()">Excluir</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="admin-header">
+    <a href="/admin/dashboard.html" class="admin-header-logo">
+      Mamus Bomfim <span>Painel Admin</span>
+    </a>
+    <div class="admin-header-right">
+      <span class="admin-header-user" id="user-email"></span>
+      <a href="/" class="btn btn-outline btn-sm" style="font-size:10px">Ver Site</a>
+      <button class="btn btn-outline btn-sm" onclick="handleLogout()" style="font-size:10px">Sair</button>
+    </div>
+  </header>
+
+  <!-- Body -->
+  <main class="admin-body">
+
+    <!-- Top Bar -->
+    <div class="dash-top">
+      <h1 class="dash-title">Suas <em>Publicações</em></h1>
+      <a href="/admin/editor.html" class="btn btn-primary">+ Nova Publicação</a>
+    </div>
+
+    <!-- Stats -->
+    <div class="dash-stats">
+      <div class="dash-stat">
+        <div class="dash-stat-num" id="stat-total">–</div>
+        <div class="dash-stat-label">Total</div>
+      </div>
+      <div class="dash-stat">
+        <div class="dash-stat-num" id="stat-published">–</div>
+        <div class="dash-stat-label">Publicadas</div>
+      </div>
+      <div class="dash-stat">
+        <div class="dash-stat-num" id="stat-draft">–</div>
+        <div class="dash-stat-label">Rascunhos</div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrapper">
+      <div class="table-toolbar">
+        <input class="table-search" type="text" id="search-input" placeholder="Buscar publicação...">
+        <select class="table-filter" id="filter-tag">
+          <option value="">Todas as tags</option>
+          <option value="Artigo">Artigo</option>
+          <option value="Notícia">Notícia</option>
+          <option value="Evento">Evento</option>
+        </select>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Título</th>
+            <th>Tag</th>
+            <th>Data</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="pub-tbody">
+          <tr><td colspan="5" style="text-align:center;padding:40px;"><span class="spinner"></span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/supabase-config.js"></script>
+  <script src="/admin/js/auth.js"></script>
+  <script src="/admin/js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,2126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mamus Bomfim — Advogados Associados</title>
+<meta name="description" content="Mamus Bomfim Advogados Associados — Escritório de advocacia em Primavera do Leste/MT. Atuação em Direito Empresarial, Cível, Trabalhista, Tributário, Imobiliário e mais.">
+<meta name="theme-color" content="#080810">
+<meta property="og:title" content="Mamus Bomfim — Advogados Associados">
+<meta property="og:description" content="Excelência jurídica há mais de 12 anos. Assessoria completa para empresas e pessoas físicas.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════
+   CSS VARIABLES & RESET
+   ═══════════════════════════════════════════════════════ */
+:root {
+  --bg: #080810;
+  --bg-subtle: #0c0c1a;
+  --gold: #b8976a;
+  --gold-light: #d4b07a;
+  --gold-dim: rgba(184,151,106,0.12);
+  --gold-line: rgba(184,151,106,0.15);
+  --text: #ffffff;
+  --text-muted: rgba(255,255,255,0.55);
+  --text-dim: rgba(255,255,255,0.3);
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Outfit', system-ui, sans-serif;
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-dramatic: cubic-bezier(0.77, 0, 0.175, 1);
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); overflow-x: hidden; }
+a { text-decoration: none; color: inherit; }
+::selection { background: rgba(184,151,106,0.35); color: #fff; }
+
+/* ═══════════════════════════════════════════════════════
+   PRELOADER
+   ═══════════════════════════════════════════════════════ */
+.preloader {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--bg);
+  display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 24px;
+  transition: opacity 0.8s var(--ease), visibility 0.8s;
+}
+.preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.preloader-logo {
+  font-family: var(--serif); font-size: 28px; font-weight: 600;
+  color: var(--gold); letter-spacing: 6px; text-transform: uppercase;
+  opacity: 0; animation: preloaderFade 1s 0.2s var(--ease) forwards;
+}
+.preloader-bar {
+  width: 120px; height: 1px; background: rgba(255,255,255,0.08);
+  position: relative; overflow: hidden;
+}
+.preloader-bar::after {
+  content: ''; position: absolute; left: 0; top: 0;
+  height: 100%; width: 0; background: var(--gold);
+  animation: preloaderBar 1.8s 0.5s var(--ease-dramatic) forwards;
+}
+@keyframes preloaderFade { to { opacity: 1; } }
+@keyframes preloaderBar { to { width: 100%; } }
+
+/* ═══════════════════════════════════════════════════════
+   GLOBAL ANIMATION CLASSES
+   ═══════════════════════════════════════════════════════ */
+.reveal {
+  opacity: 0; transform: translateY(60px);
+  transition: opacity 1s var(--ease-out), transform 1s var(--ease-out);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-left {
+  opacity: 0; transform: translateX(-60px);
+  transition: opacity 1s var(--ease-out), transform 1s var(--ease-out);
+}
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+.reveal-right {
+  opacity: 0; transform: translateX(60px);
+  transition: opacity 1s var(--ease-out), transform 1s var(--ease-out);
+}
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
+.reveal-scale {
+  opacity: 0; transform: scale(0.92);
+  transition: opacity 1.2s var(--ease-out), transform 1.2s var(--ease-out);
+}
+.reveal-scale.visible { opacity: 1; transform: scale(1); }
+.reveal-clip {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1.2s var(--ease-dramatic);
+}
+.reveal-clip.visible { clip-path: inset(0 0 0% 0); }
+
+/* Stagger children */
+.stagger-children > * { transition-delay: calc(var(--i, 0) * 120ms); }
+
+/* Line draw animation */
+.line-draw { transform: scaleX(0); transform-origin: left; transition: transform 1.2s var(--ease-out); }
+.line-draw.visible { transform: scaleX(1); }
+
+/* Text split animation */
+.split-text .word {
+  display: inline-block; overflow: hidden; vertical-align: bottom;
+}
+.split-text .word-inner {
+  display: inline-block; transform: translateY(110%);
+  transition: transform 0.8s var(--ease-out);
+}
+.split-text.visible .word-inner { transform: translateY(0); }
+
+/* ═══════════════════════════════════════════════════════
+   GRAIN OVERLAY
+   ═══════════════════════════════════════════════════════ */
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: 10000; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity: 0.4;
+}
+
+/* ═══════════════════════════════════════════════════════
+   IMAGE SLOT
+   ═══════════════════════════════════════════════════════ */
+.img-slot {
+  position: relative; overflow: hidden;
+  background: linear-gradient(135deg, #111128 0%, #0d1a2e 50%, #0a1628 100%);
+  display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 10px;
+}
+.img-slot::before {
+  content: ''; position: absolute; inset: 0;
+  background: repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255,255,255,0.01) 40px, rgba(255,255,255,0.01) 80px);
+}
+.img-slot-icon {
+  opacity: 0.2; transition: opacity 0.4s;
+}
+.img-slot:hover .img-slot-icon { opacity: 0.35; }
+.img-slot-label {
+  color: rgba(255,255,255,0.2); font-family: var(--sans); font-size: 10px;
+  letter-spacing: 2.5px; text-transform: uppercase; position: relative;
+  text-align: center; padding: 0 20px; max-width: 280px;
+}
+
+/* Real photo overlay — when data-photo-url is set, img is injected here */
+.img-slot img.img-slot-photo {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; z-index: 3;
+  display: block;
+}
+/* Hide placeholder elements when a real photo is present */
+.img-slot:has(img.img-slot-photo) .img-slot-icon,
+.img-slot:has(img.img-slot-photo) .img-slot-label {
+  display: none;
+}
+.img-slot:has(img.img-slot-photo)::before { opacity: 0; }
+
+/* ═══════════════════════════════════════════════════════
+   NAVBAR
+   ═══════════════════════════════════════════════════════ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 28px 0;
+  transition: all 0.6s var(--ease);
+}
+.nav.scrolled {
+  padding: 14px 0;
+  background: rgba(8,8,16,0.92);
+  backdrop-filter: blur(24px) saturate(1.2);
+  border-bottom: 1px solid var(--gold-line);
+}
+.nav-inner {
+  max-width: 1320px; margin: 0 auto; padding: 0 48px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo { cursor: pointer; }
+.nav-logo-name {
+  font-family: var(--serif); font-size: 22px; font-weight: 600;
+  color: var(--gold); letter-spacing: 4px; text-transform: uppercase;
+  line-height: 1.1;
+}
+.nav-logo-name span { color: rgba(255,255,255,0.35); font-weight: 300; }
+.nav-logo-sub {
+  font-family: var(--sans); font-size: 9px; letter-spacing: 5px;
+  text-transform: uppercase; color: var(--text-dim); margin-top: 3px;
+}
+.nav-links { display: flex; gap: 40px; align-items: center; }
+.nav-link {
+  font-family: var(--sans); font-size: 11.5px; font-weight: 400;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(255,255,255,0.55); cursor: pointer;
+  position: relative; padding-bottom: 4px;
+  transition: color 0.4s var(--ease);
+}
+.nav-link::after {
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 0; height: 1px; background: var(--gold);
+  transition: width 0.5s var(--ease-out);
+}
+.nav-link:hover { color: var(--gold); }
+.nav-link:hover::after { width: 100%; }
+
+/* ═══════════════════════════════════════════════════════
+   HERO
+   ═══════════════════════════════════════════════════════ */
+.hero {
+  position: relative; height: 100vh; min-height: 750px; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0; will-change: transform;
+}
+.hero-bg .img-slot { width: 100%; height: 120%; }
+.hero-overlay {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(8,8,16,0.3) 0%, rgba(8,8,16,0.55) 50%, rgba(8,8,16,1) 100%),
+    linear-gradient(90deg, rgba(8,8,16,0.6) 0%, transparent 60%);
+}
+.hero-content {
+  position: relative; z-index: 2;
+  height: 100%; display: flex; flex-direction: column;
+  justify-content: flex-end;
+  max-width: 1320px; margin: 0 auto; padding: 0 48px 130px;
+}
+.hero-line {
+  width: 72px; height: 1px; background: var(--gold); margin-bottom: 36px;
+  transform: scaleX(0); transform-origin: left;
+  animation: heroLine 1s 2.6s var(--ease-out) forwards;
+}
+@keyframes heroLine { to { transform: scaleX(1); } }
+.hero-title {
+  font-family: var(--serif); font-size: clamp(46px, 5.5vw, 80px);
+  font-weight: 300; line-height: 1.08; max-width: 850px;
+  overflow: hidden;
+}
+.hero-title-line {
+  display: block; overflow: hidden;
+}
+.hero-title-inner {
+  display: block;
+  transform: translateY(110%);
+  animation: heroTextUp 1.2s var(--ease-out) forwards;
+}
+.hero-title-line:nth-child(1) .hero-title-inner { animation-delay: 2.5s; }
+.hero-title-line:nth-child(2) .hero-title-inner { animation-delay: 2.7s; }
+@keyframes heroTextUp { to { transform: translateY(0); } }
+.hero-title em {
+  font-style: normal; font-weight: 600; color: var(--gold);
+}
+.hero-desc {
+  font-family: var(--sans); font-size: 16px; font-weight: 300;
+  color: var(--text-muted); max-width: 540px; line-height: 1.75;
+  margin-top: 28px; letter-spacing: 0.3px;
+  opacity: 0; transform: translateY(20px);
+  animation: heroFade 1s 3.1s var(--ease-out) forwards;
+}
+@keyframes heroFade { to { opacity: 1; transform: translateY(0); } }
+.hero-cta {
+  margin-top: 44px; display: inline-flex;
+  opacity: 0; animation: heroFade 1s 3.4s var(--ease-out) forwards;
+}
+.btn-primary {
+  display: inline-block;
+  padding: 18px 52px; background: transparent;
+  border: 1px solid var(--gold); color: var(--gold);
+  font-family: var(--sans); font-size: 11.5px; font-weight: 500;
+  letter-spacing: 3.5px; text-transform: uppercase;
+  cursor: pointer; position: relative; overflow: hidden;
+  transition: color 0.5s var(--ease);
+  text-align: center;
+}
+.btn-primary::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--gold); transform: scaleX(0); transform-origin: left;
+  transition: transform 0.6s var(--ease-dramatic);
+  z-index: -1;
+}
+.btn-primary:hover { color: var(--bg); }
+.btn-primary:hover::before { transform: scaleX(1); }
+
+/* Scroll indicator */
+.hero-scroll {
+  position: absolute; bottom: 44px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  opacity: 0; animation: heroFade 1s 3.8s var(--ease-out) forwards;
+}
+.hero-scroll-text {
+  font-family: var(--sans); font-size: 9px; letter-spacing: 4px;
+  text-transform: uppercase; color: rgba(255,255,255,0.3);
+}
+.hero-scroll-line {
+  width: 1px; height: 48px; position: relative; overflow: hidden;
+  background: rgba(255,255,255,0.06);
+}
+.hero-scroll-line::after {
+  content: ''; position: absolute; top: -100%; left: 0;
+  width: 100%; height: 100%; background: var(--gold);
+  animation: scrollLine 2s ease-in-out infinite;
+}
+@keyframes scrollLine {
+  0% { top: -100%; }
+  50% { top: 100%; }
+  50.01% { top: -100%; }
+  100% { top: 100%; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   HORIZONTAL MARQUEE
+   ═══════════════════════════════════════════════════════ */
+.marquee {
+  padding: 32px 0; border-top: 1px solid var(--gold-line);
+  border-bottom: 1px solid var(--gold-line); overflow: hidden;
+  background: var(--bg);
+}
+.marquee-track {
+  display: flex; gap: 64px; align-items: center;
+  animation: marqueeScroll 30s linear infinite; white-space: nowrap;
+  width: max-content;
+}
+.marquee-item {
+  font-family: var(--serif); font-size: 15px; font-weight: 400;
+  color: var(--text-dim); letter-spacing: 3px; text-transform: uppercase;
+  flex-shrink: 0;
+}
+.marquee-dot {
+  width: 4px; height: 4px; border-radius: 50%; background: var(--gold);
+  flex-shrink: 0; opacity: 0.5;
+}
+@keyframes marqueeScroll { to { transform: translateX(-50%); } }
+
+/* Spinner */
+.spinner {
+  width: 18px; height: 18px;
+  border: 2px solid rgba(255,255,255,0.1);
+  border-top-color: var(--gold); border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ═══════════════════════════════════════════════════════
+   SECTION COMMON
+   ═══════════════════════════════════════════════════════ */
+.section { padding: 160px 48px; max-width: 1320px; margin: 0 auto; }
+.section-full { padding: 160px 48px; }
+.section-label {
+  font-family: var(--sans); font-size: 11px; font-weight: 500;
+  letter-spacing: 5px; text-transform: uppercase; color: var(--gold);
+  display: flex; align-items: center; gap: 16px;
+}
+.section-label::before {
+  content: ''; width: 32px; height: 1px; background: var(--gold);
+}
+.section-title {
+  font-family: var(--serif); font-size: clamp(34px, 3.8vw, 56px);
+  font-weight: 300; line-height: 1.15; margin-top: 20px;
+}
+.section-title em { font-style: normal; font-weight: 600; color: var(--gold); }
+
+/* ═══════════════════════════════════════════════════════
+   ABOUT
+   ═══════════════════════════════════════════════════════ */
+.about-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 100px;
+  align-items: center; margin-top: 0;
+}
+.about-text p {
+  font-family: var(--sans); font-size: 15.5px; font-weight: 300;
+  color: var(--text-muted); line-height: 1.85; margin-top: 20px;
+}
+.about-stats {
+  display: flex; gap: 56px; margin-top: 56px;
+  padding-top: 40px; border-top: 1px solid var(--gold-line);
+}
+.stat-number {
+  font-family: var(--serif); font-size: 48px; font-weight: 300;
+  color: var(--gold); line-height: 1; display: flex; align-items: baseline;
+}
+.stat-number .counter { display: inline-block; }
+.stat-number .suffix { font-size: 28px; margin-left: 2px; }
+.stat-label {
+  font-family: var(--sans); font-size: 11px; font-weight: 400;
+  letter-spacing: 1.5px; color: var(--text-dim); margin-top: 10px;
+  text-transform: uppercase;
+}
+.about-image { position: relative; }
+.about-image .img-slot { aspect-ratio: 4/5; }
+.about-image-accent {
+  position: absolute; bottom: -28px; left: -28px;
+  width: 160px; height: 160px;
+  border: 1px solid var(--gold-line);
+  z-index: -1;
+  transform: scale(0); transform-origin: bottom left;
+  transition: transform 1.2s var(--ease-out);
+}
+.about-image-accent.visible { transform: scale(1); }
+.about-image-badge {
+  position: absolute; top: 32px; right: -20px;
+  background: var(--gold); color: var(--bg);
+  padding: 20px 24px; text-align: center;
+  font-family: var(--serif);
+  opacity: 0; transform: translateX(20px);
+  transition: all 0.8s 0.6s var(--ease-out);
+}
+.about-image-badge.visible { opacity: 1; transform: translateX(0); }
+.about-image-badge .badge-num {
+  font-size: 32px; font-weight: 700; line-height: 1;
+}
+.about-image-badge .badge-text {
+  font-size: 10px; font-weight: 400; letter-spacing: 2px;
+  text-transform: uppercase; margin-top: 4px;
+  font-family: var(--sans);
+}
+
+/* ═══════════════════════════════════════════════════════
+   AREAS
+   ═══════════════════════════════════════════════════════ */
+.areas-section {
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(184,151,106,0.03) 0%, transparent 60%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-subtle) 50%, var(--bg) 100%);
+}
+.areas-header { text-align: center; margin-bottom: 80px; }
+.areas-grid {
+  max-width: 1320px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--gold-line);
+}
+.area-card {
+  background: var(--bg); padding: 52px 44px;
+  cursor: pointer; position: relative; overflow: hidden;
+  transition: background 0.6s var(--ease);
+}
+.area-card::before {
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 100%; height: 2px; background: var(--gold);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.7s var(--ease-dramatic);
+}
+.area-card:hover { background: rgba(184,151,106,0.04); }
+.area-card:hover::before { transform: scaleX(1); }
+.area-card:hover .area-icon { transform: translateY(-4px); }
+.area-card:hover .area-arrow { opacity: 1; transform: translateX(0); }
+.area-icon {
+  color: var(--gold); margin-bottom: 28px;
+  transition: transform 0.5s var(--ease-out);
+}
+.area-name {
+  font-family: var(--serif); font-size: 24px; font-weight: 600;
+  color: var(--text); margin-bottom: 16px;
+}
+.area-desc {
+  font-family: var(--sans); font-size: 14px; font-weight: 300;
+  color: var(--text-dim); line-height: 1.75;
+}
+.area-arrow {
+  margin-top: 24px; color: var(--gold);
+  opacity: 0; transform: translateX(-10px);
+  transition: all 0.5s var(--ease-out);
+}
+
+/* ═══════════════════════════════════════════════════════
+   PARALLAX DIVIDER
+   ═══════════════════════════════════════════════════════ */
+.parallax-divider {
+  height: 50vh; position: relative; overflow: hidden;
+}
+.parallax-divider .img-slot { width: 100%; height: 130%; }
+.parallax-divider-overlay {
+  position: absolute; inset: 0;
+  background: rgba(8,8,16,0.65);
+  display: flex; align-items: center; justify-content: center;
+}
+.parallax-quote {
+  font-family: var(--serif); font-size: clamp(22px, 2.8vw, 36px);
+  font-weight: 300; font-style: italic; color: var(--text);
+  text-align: center; max-width: 700px; line-height: 1.5;
+  padding: 0 40px;
+}
+.parallax-quote em { font-style: normal; color: var(--gold); }
+
+/* ═══════════════════════════════════════════════════════
+   TEAM
+   ═══════════════════════════════════════════════════════ */
+.team-header { text-align: center; margin-bottom: 80px; }
+.team-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 36px;
+}
+.team-card { cursor: pointer; position: relative; }
+.team-card-img {
+  position: relative; overflow: hidden; margin-bottom: 28px;
+}
+.team-card-img .img-slot { aspect-ratio: 3/4; transition: transform 0.8s var(--ease-out); }
+.team-card:hover .team-card-img .img-slot { transform: scale(1.04); }
+.team-card-img::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 40%; background: linear-gradient(to top, rgba(8,8,16,0.5), transparent);
+  opacity: 0; transition: opacity 0.5s;
+}
+.team-card:hover .team-card-img::after { opacity: 1; }
+.team-card-overlay {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 20px; z-index: 2;
+  transform: translateY(10px); opacity: 0;
+  transition: all 0.5s var(--ease-out);
+}
+.team-card:hover .team-card-overlay { transform: translateY(0); opacity: 1; }
+.team-card-overlay-text {
+  font-family: var(--sans); font-size: 12px; color: var(--gold);
+  letter-spacing: 2px; text-transform: uppercase;
+}
+.team-name {
+  font-family: var(--serif); font-size: 21px; font-weight: 600;
+  color: var(--text); transition: color 0.4s;
+}
+.team-card:hover .team-name { color: var(--gold); }
+.team-role {
+  font-family: var(--sans); font-size: 12px; font-weight: 400;
+  color: var(--gold); letter-spacing: 1.5px; text-transform: uppercase;
+  margin-top: 6px;
+}
+.team-area {
+  font-family: var(--sans); font-size: 13.5px; font-weight: 300;
+  color: var(--text-dim); margin-top: 8px; line-height: 1.5;
+}
+.team-oab {
+  font-family: var(--sans); font-size: 11px; color: rgba(255,255,255,0.18);
+  margin-top: 5px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   NEWS
+   ═══════════════════════════════════════════════════════ */
+.news-section {
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-subtle) 100%);
+}
+.news-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 64px; max-width: 1320px; margin-left: auto; margin-right: auto;
+  padding: 0;
+}
+.news-link {
+  font-family: var(--sans); font-size: 12px; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--gold); cursor: pointer;
+  position: relative; padding-bottom: 6px;
+}
+.news-link::after {
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 100%; height: 1px; background: var(--gold);
+  transform: scaleX(0.4); transform-origin: left;
+  transition: transform 0.5s var(--ease-out);
+}
+.news-link:hover::after { transform: scaleX(1); }
+.news-grid {
+  display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 32px;
+  max-width: 1320px; margin: 0 auto;
+}
+.news-card {
+  border: 1px solid rgba(184,151,106,0.08);
+  cursor: pointer; position: relative; overflow: hidden;
+  transition: all 0.6s var(--ease);
+}
+.news-card:hover { border-color: rgba(184,151,106,0.25); }
+.news-card:hover .news-card-img .img-slot { transform: scale(1.06); }
+.news-card-img { overflow: hidden; }
+.news-card-img .img-slot {
+  aspect-ratio: 16/10; transition: transform 1s var(--ease-out);
+}
+.news-card:first-child .news-card-img .img-slot { aspect-ratio: 16/9; }
+.news-card-body { padding: 32px 28px; }
+.news-card-meta {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 18px;
+}
+.news-tag {
+  font-family: var(--sans); font-size: 10px; font-weight: 500;
+  letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold);
+  background: var(--gold-dim); padding: 5px 14px;
+}
+.news-date {
+  font-family: var(--sans); font-size: 12px; color: var(--text-dim);
+}
+.news-title {
+  font-family: var(--serif); font-size: 21px; font-weight: 600;
+  color: var(--text); line-height: 1.35; margin-bottom: 12px;
+  transition: color 0.4s;
+}
+.news-card:hover .news-title { color: var(--gold-light); }
+.news-excerpt {
+  font-family: var(--sans); font-size: 14px; font-weight: 300;
+  color: var(--text-dim); line-height: 1.65;
+}
+
+/* ═══════════════════════════════════════════════════════
+   CTA BANNER
+   ═══════════════════════════════════════════════════════ */
+.cta-banner { position: relative; padding: 140px 48px; overflow: hidden; }
+.cta-banner .img-slot { position: absolute; inset: 0; width: 100%; height: 100%; }
+.cta-overlay {
+  position: absolute; inset: 0;
+  background: rgba(8,8,16,0.82);
+  backdrop-filter: blur(2px);
+}
+.cta-content {
+  position: relative; z-index: 2;
+  max-width: 720px; margin: 0 auto; text-align: center;
+}
+.cta-content h2 {
+  font-family: var(--serif); font-size: clamp(30px, 3.2vw, 48px);
+  font-weight: 300; line-height: 1.3; margin-bottom: 24px;
+}
+.cta-content h2 em { font-style: normal; font-weight: 600; color: var(--gold); }
+.cta-content p {
+  font-family: var(--sans); font-size: 15.5px; font-weight: 300;
+  color: var(--text-muted); line-height: 1.75; margin-bottom: 44px;
+}
+.btn-gold {
+  display: inline-block;
+  padding: 18px 60px; background: var(--gold); border: none;
+  color: var(--bg); font-family: var(--sans); font-size: 12px; font-weight: 600;
+  letter-spacing: 3.5px; text-transform: uppercase;
+  cursor: pointer; position: relative; overflow: hidden;
+  transition: all 0.4s var(--ease);
+  text-align: center;
+}
+.btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(184,151,106,0.2); }
+
+/* ═══════════════════════════════════════════════════════
+   CONTACT
+   ═══════════════════════════════════════════════════════ */
+.contact-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 100px;
+}
+.office { margin-bottom: 44px; }
+.office-name {
+  font-family: var(--serif); font-size: 20px; font-weight: 600;
+  color: var(--text); margin-bottom: 14px;
+}
+.office-details {
+  font-family: var(--sans); font-size: 14.5px; font-weight: 300;
+  color: var(--text-muted); line-height: 1.85;
+}
+.office-details strong { font-weight: 400; color: rgba(255,255,255,0.7); }
+.contact-hours {
+  border-top: 1px solid var(--gold-line); padding-top: 28px; margin-top: 8px;
+}
+.contact-hours-label {
+  font-family: var(--sans); font-size: 11px; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px;
+}
+.contact-hours-value {
+  font-family: var(--sans); font-size: 14.5px; font-weight: 300;
+  color: var(--text-muted);
+}
+.contact-images { display: flex; flex-direction: column; gap: 20px; }
+
+/* WhatsApp icon link */
+.wpp-link {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: rgba(37,211,102,0.12);
+  color: #25d366;
+  margin-left: 8px; vertical-align: middle;
+  transition: all 0.3s var(--ease);
+}
+.wpp-link:hover {
+  background: #25d366; color: #fff;
+  transform: scale(1.15);
+}
+.contact-images .img-slot:first-child { aspect-ratio: 16/10; }
+.contact-images-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.contact-images-row .img-slot { aspect-ratio: 4/3; }
+
+/* ═══════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════ */
+.footer {
+  border-top: 1px solid var(--gold-line);
+  padding: 72px 48px 48px; background: rgba(4,4,10,1);
+}
+.footer-inner {
+  max-width: 1320px; margin: 0 auto;
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 56px;
+}
+.footer-brand-name {
+  font-family: var(--serif); font-size: 20px; font-weight: 600;
+  color: var(--gold); letter-spacing: 3px; text-transform: uppercase;
+  margin-bottom: 18px;
+}
+.footer-brand-desc {
+  font-family: var(--sans); font-size: 13.5px; font-weight: 300;
+  color: var(--text-dim); line-height: 1.75; max-width: 320px;
+}
+.footer-col-title {
+  font-family: var(--sans); font-size: 11px; font-weight: 500;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: rgba(255,255,255,0.45); margin-bottom: 24px;
+}
+.footer-link {
+  display: block; font-family: var(--sans); font-size: 13.5px; font-weight: 300;
+  color: var(--text-dim); margin-bottom: 12px;
+  transition: color 0.3s, transform 0.3s;
+}
+.footer-link:hover { color: var(--gold); transform: translateX(4px); }
+.footer-bottom {
+  max-width: 1320px; margin: 44px auto 0; padding-top: 28px;
+  border-top: 1px solid rgba(184,151,106,0.06);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-copy {
+  font-family: var(--sans); font-size: 12px; color: rgba(255,255,255,0.15);
+}
+.footer-socials { display: flex; gap: 24px; }
+.footer-social {
+  font-family: var(--sans); font-size: 11px; letter-spacing: 1.5px;
+  text-transform: uppercase; color: rgba(255,255,255,0.2);
+  transition: color 0.3s;
+}
+.footer-social:hover { color: var(--gold); }
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 60px; }
+  .areas-grid { grid-template-columns: repeat(2, 1fr); }
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+  .team-associados { grid-template-columns: repeat(2, 1fr) !important; }
+  .news-grid { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+  .nav-links.mobile-open {
+    display: flex; flex-direction: column;
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: rgba(8,8,16,0.97); backdrop-filter: blur(24px);
+    padding: 24px 48px 32px; gap: 20px;
+    border-bottom: 1px solid var(--gold-line);
+    animation: mobileNavIn 0.4s var(--ease-out);
+  }
+  @keyframes mobileNavIn { from { opacity:0; transform:translateY(-10px); } to { opacity:1; transform:translateY(0); } }
+  .nav-hamburger { display: flex; }
+  .section, .section-full { padding: 100px 24px; }
+  .hero-content { padding: 0 24px 100px; }
+  .areas-grid { grid-template-columns: 1fr; }
+  .team-socios { grid-template-columns: 1fr !important; gap: 32px !important; }
+  .team-associados { grid-template-columns: 1fr !important; }
+  .about-stats { flex-direction: column; gap: 32px; }
+  .footer-inner { grid-template-columns: 1fr; }
+  .nav-inner { padding: 0 24px; }
+  .news-header, .news-grid { padding: 0; }
+}
+
+/* Hamburger button — hidden on desktop */
+.nav-hamburger {
+  display: none;
+  width: 44px; height: 44px;
+  background: none; border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px; cursor: pointer;
+  flex-direction: column; align-items: center; justify-content: center;
+  gap: 5px; padding: 0;
+  transition: border-color 0.3s;
+}
+.nav-hamburger:hover { border-color: var(--gold); }
+.nav-hamburger span {
+  display: block; width: 18px; height: 1.5px;
+  background: var(--gold); transition: all 0.3s var(--ease);
+}
+.nav-hamburger.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-hamburger.active span:nth-child(2) { opacity: 0; }
+.nav-hamburger.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+/* ═══════════════════════════════════════════════════════
+   PROFILE MODAL
+   ═══════════════════════════════════════════════════════ */
+.profile-modal-backdrop {
+  position: fixed; inset: 0; z-index: 9998;
+  background: rgba(0,0,0,0); backdrop-filter: blur(0px);
+  visibility: hidden; opacity: 0;
+  transition: background 0.5s var(--ease), backdrop-filter 0.5s var(--ease),
+              opacity 0.5s var(--ease), visibility 0.5s;
+  cursor: pointer;
+}
+.profile-modal-backdrop.open {
+  background: rgba(0,0,0,0.7); backdrop-filter: blur(12px);
+  visibility: visible; opacity: 1;
+}
+.profile-modal {
+  position: fixed; z-index: 9999;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  width: 90%; max-width: 920px; max-height: 90vh;
+  display: grid; grid-template-columns: 1fr 1.2fr;
+  background: var(--bg); border: 1px solid var(--gold-line);
+  overflow: hidden;
+  opacity: 0; visibility: hidden;
+  transition: transform 0.6s var(--ease-out), opacity 0.5s var(--ease), visibility 0.5s;
+}
+.profile-modal.open {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1; visibility: visible;
+}
+.profile-modal-photo {
+  position: relative; overflow: hidden;
+  min-height: 480px;
+}
+.profile-modal-photo .img-slot {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  transform: scale(1.1);
+  transition: transform 1.2s var(--ease-out);
+}
+.profile-modal.open .profile-modal-photo .img-slot {
+  transform: scale(1);
+}
+.profile-modal-content {
+  padding: 56px 48px;
+  display: flex; flex-direction: column; justify-content: center;
+  overflow-y: auto;
+}
+.profile-modal-close {
+  position: absolute; top: 20px; right: 24px; z-index: 10;
+  width: 44px; height: 44px;
+  background: rgba(8,8,16,0.6); backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.08); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.3s var(--ease);
+  color: rgba(255,255,255,0.5);
+}
+.profile-modal-close:hover {
+  background: var(--gold); border-color: var(--gold);
+  color: var(--bg); transform: rotate(90deg);
+}
+.profile-modal-label {
+  font-family: var(--sans); font-size: 11px; font-weight: 500;
+  letter-spacing: 4px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 16px;
+  opacity: 0; transform: translateY(15px);
+  transition: all 0.5s 0.2s var(--ease-out);
+}
+.profile-modal.open .profile-modal-label {
+  opacity: 1; transform: translateY(0);
+}
+.profile-modal-name {
+  font-family: var(--serif); font-size: clamp(28px, 3vw, 38px);
+  font-weight: 600; color: var(--text); line-height: 1.15;
+  margin-bottom: 6px;
+  opacity: 0; transform: translateY(20px);
+  transition: all 0.6s 0.3s var(--ease-out);
+}
+.profile-modal.open .profile-modal-name {
+  opacity: 1; transform: translateY(0);
+}
+.profile-modal-role {
+  font-family: var(--sans); font-size: 14px; font-weight: 400;
+  color: var(--gold); letter-spacing: 1px;
+  margin-bottom: 8px;
+  opacity: 0; transform: translateY(15px);
+  transition: all 0.5s 0.35s var(--ease-out);
+}
+.profile-modal.open .profile-modal-role {
+  opacity: 1; transform: translateY(0);
+}
+.profile-modal-oab {
+  font-family: var(--sans); font-size: 12px;
+  color: var(--text-dim); margin-bottom: 28px;
+  opacity: 0; transform: translateY(15px);
+  transition: all 0.5s 0.4s var(--ease-out);
+}
+.profile-modal.open .profile-modal-oab {
+  opacity: 1; transform: translateY(0);
+}
+.profile-modal-divider {
+  width: 48px; height: 1px; background: var(--gold);
+  margin-bottom: 28px;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.8s 0.45s var(--ease-out);
+}
+.profile-modal.open .profile-modal-divider {
+  transform: scaleX(1);
+}
+.profile-modal-bio {
+  font-family: var(--sans); font-size: 14.5px; font-weight: 300;
+  color: var(--text-muted); line-height: 1.8;
+  opacity: 0; transform: translateY(20px);
+  transition: all 0.6s 0.5s var(--ease-out);
+}
+.profile-modal.open .profile-modal-bio {
+  opacity: 1; transform: translateY(0);
+}
+.profile-modal-areas {
+  margin-top: 28px; display: flex; flex-wrap: wrap; gap: 8px;
+  opacity: 0; transform: translateY(15px);
+  transition: all 0.5s 0.6s var(--ease-out);
+}
+.profile-modal.open .profile-modal-areas {
+  opacity: 1; transform: translateY(0);
+}
+.profile-modal-area-tag {
+  font-family: var(--sans); font-size: 10px; font-weight: 500;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--gold); background: var(--gold-dim);
+  padding: 6px 14px;
+}
+.profile-modal-contact {
+  margin-top: 32px; display: flex; align-items: center; gap: 10px;
+  opacity: 0; transform: translateY(15px);
+  transition: all 0.5s 0.65s var(--ease-out);
+}
+.profile-modal.open .profile-modal-contact {
+  opacity: 1; transform: translateY(0);
+}
+.profile-modal-contact a {
+  font-family: var(--sans); font-size: 12px; font-weight: 500;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--gold); border-bottom: 1px solid rgba(184,151,106,0.3);
+  padding-bottom: 2px;
+  transition: border-color 0.3s;
+}
+.profile-modal-contact a:hover { border-color: var(--gold); }
+
+@media (max-width: 768px) {
+  .profile-modal {
+    grid-template-columns: 1fr;
+    max-height: 95vh;
+  }
+  .profile-modal-photo { min-height: 280px; }
+  .profile-modal-content { padding: 32px 24px; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   NEWS ARTICLE MODAL
+   ═══════════════════════════════════════════════════════ */
+.news-modal-backdrop {
+  position: fixed; inset: 0; z-index: 9998;
+  background: rgba(0,0,0,0); backdrop-filter: blur(0px);
+  visibility: hidden; opacity: 0;
+  transition: background 0.5s var(--ease), backdrop-filter 0.5s var(--ease),
+              opacity 0.5s var(--ease), visibility 0.5s;
+  cursor: pointer;
+}
+.news-modal-backdrop.open {
+  background: rgba(0,0,0,0.75); backdrop-filter: blur(14px);
+  visibility: visible; opacity: 1;
+}
+.news-modal {
+  position: fixed; z-index: 9999;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) translateY(30px);
+  width: 92%; max-width: 780px; max-height: 90vh;
+  background: var(--bg);
+  border: 1px solid var(--gold-line);
+  overflow: hidden;
+  opacity: 0; visibility: hidden;
+  transition: transform 0.6s var(--ease-out), opacity 0.5s var(--ease), visibility 0.5s;
+  display: flex; flex-direction: column;
+}
+.news-modal.open {
+  transform: translate(-50%, -50%) translateY(0);
+  opacity: 1; visibility: visible;
+}
+.news-modal-close {
+  position: absolute; top: 16px; right: 16px; z-index: 10;
+  width: 44px; height: 44px;
+  background: rgba(8,8,16,0.7); backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.08); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.3s var(--ease);
+  color: rgba(255,255,255,0.5);
+}
+.news-modal-close:hover {
+  background: var(--gold); border-color: var(--gold);
+  color: var(--bg); transform: rotate(90deg);
+}
+.news-modal-hero {
+  position: relative; width: 100%; overflow: hidden;
+  min-height: 260px; max-height: 340px;
+  flex-shrink: 0;
+}
+.news-modal-hero img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  transform: scale(1.08);
+  transition: transform 1.4s var(--ease-out);
+}
+.news-modal.open .news-modal-hero img {
+  transform: scale(1);
+}
+.news-modal-hero .img-slot {
+  width: 100%; height: 260px;
+}
+.news-modal-hero-gradient {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 50%;
+  background: linear-gradient(to top, var(--bg), transparent);
+}
+.news-modal-body {
+  padding: 40px 48px 48px;
+  overflow-y: auto; flex: 1;
+}
+.news-modal-meta {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 20px;
+  opacity: 0; transform: translateY(15px);
+  transition: all 0.5s 0.2s var(--ease-out);
+}
+.news-modal.open .news-modal-meta {
+  opacity: 1; transform: translateY(0);
+}
+.news-modal-tag {
+  font-family: var(--sans); font-size: 10px; font-weight: 500;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--gold); background: var(--gold-dim);
+  padding: 5px 14px;
+}
+.news-modal-date {
+  font-family: var(--sans); font-size: 13px; color: var(--text-dim);
+}
+.news-modal-title {
+  font-family: var(--serif); font-size: clamp(26px, 3vw, 36px);
+  font-weight: 600; color: var(--text); line-height: 1.25;
+  margin-bottom: 12px;
+  opacity: 0; transform: translateY(20px);
+  transition: all 0.6s 0.3s var(--ease-out);
+}
+.news-modal.open .news-modal-title {
+  opacity: 1; transform: translateY(0);
+}
+.news-modal-excerpt {
+  font-family: var(--sans); font-size: 16px; font-weight: 400;
+  color: var(--text-muted); line-height: 1.7;
+  margin-bottom: 28px; font-style: italic;
+  opacity: 0; transform: translateY(15px);
+  transition: all 0.5s 0.4s var(--ease-out);
+}
+.news-modal.open .news-modal-excerpt {
+  opacity: 1; transform: translateY(0);
+}
+.news-modal-divider {
+  width: 56px; height: 1px; background: var(--gold);
+  margin-bottom: 28px;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.8s 0.45s var(--ease-out);
+}
+.news-modal.open .news-modal-divider {
+  transform: scaleX(1);
+}
+.news-modal-content {
+  font-family: var(--sans); font-size: 15px; font-weight: 300;
+  color: var(--text-muted); line-height: 1.9;
+  opacity: 0; transform: translateY(20px);
+  transition: all 0.6s 0.55s var(--ease-out);
+}
+.news-modal.open .news-modal-content {
+  opacity: 1; transform: translateY(0);
+}
+.news-modal-content p { margin-bottom: 16px; }
+.news-modal-share {
+  margin-top: 36px; padding-top: 28px;
+  border-top: 1px solid var(--gold-line);
+  display: flex; align-items: center; gap: 16px;
+  opacity: 0; transform: translateY(15px);
+  transition: all 0.5s 0.65s var(--ease-out);
+}
+.news-modal.open .news-modal-share {
+  opacity: 1; transform: translateY(0);
+}
+.news-modal-share-label {
+  font-family: var(--sans); font-size: 11px; font-weight: 500;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text-dim);
+}
+.news-modal-share-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--text-dim); cursor: pointer;
+  transition: all 0.3s var(--ease);
+}
+.news-modal-share-btn:hover {
+  background: var(--gold-dim); border-color: var(--gold);
+  color: var(--gold);
+}
+.news-modal-share-btn.wpp:hover {
+  background: rgba(37,211,102,0.12); border-color: #25d366;
+  color: #25d366;
+}
+
+@media (max-width: 768px) {
+  .news-modal { width: 96%; max-height: 95vh; }
+  .news-modal-hero { min-height: 180px; max-height: 220px; }
+  .news-modal-body { padding: 28px 24px 36px; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   ALL PUBLICATIONS OVERLAY
+   ═══════════════════════════════════════════════════════ */
+.pubs-overlay {
+  position: fixed; inset: 0; z-index: 9000;
+  background: var(--bg);
+  overflow-y: auto;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.7s var(--ease-out), opacity 0.4s var(--ease);
+  visibility: hidden;
+}
+.pubs-overlay.open {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+.pubs-overlay-header {
+  position: sticky; top: 0; z-index: 10;
+  background: rgba(8,8,16,0.94);
+  backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--gold-line);
+  padding: 0;
+}
+.pubs-overlay-header-inner {
+  max-width: 1320px; margin: 0 auto;
+  padding: 24px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.pubs-overlay-title {
+  font-family: var(--serif); font-size: 24px; font-weight: 400;
+  color: var(--text);
+}
+.pubs-overlay-title em { font-style: normal; font-weight: 600; color: var(--gold); }
+.pubs-overlay-close {
+  width: 44px; height: 44px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.08); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.3s var(--ease);
+  color: rgba(255,255,255,0.5);
+}
+.pubs-overlay-close:hover {
+  background: var(--gold); border-color: var(--gold);
+  color: var(--bg); transform: rotate(90deg);
+}
+
+/* Filters */
+.pubs-filters {
+  max-width: 1320px; margin: 0 auto;
+  padding: 28px 48px 0;
+  display: flex; gap: 12px; flex-wrap: wrap;
+}
+.pubs-filter-btn {
+  padding: 10px 24px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--text-dim);
+  font-family: var(--sans); font-size: 12px; font-weight: 400;
+  letter-spacing: 2px; text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+}
+.pubs-filter-btn:hover {
+  border-color: rgba(184,151,106,0.4); color: var(--text-muted);
+}
+.pubs-filter-btn.active {
+  background: var(--gold); border-color: var(--gold);
+  color: var(--bg); font-weight: 500;
+}
+.pubs-counter {
+  font-family: var(--sans); font-size: 12px; color: var(--text-dim);
+  padding: 10px 0; margin-left: auto;
+  align-self: center;
+}
+
+/* Grid */
+.pubs-grid {
+  max-width: 1320px; margin: 0 auto;
+  padding: 36px 48px 80px;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+.pubs-grid .news-card {
+  opacity: 0; transform: translateY(30px);
+  animation: pubCardIn 0.5s var(--ease-out) forwards;
+}
+@keyframes pubCardIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+.pubs-empty {
+  grid-column: 1 / -1;
+  text-align: center; padding: 80px 0;
+  font-family: var(--sans); font-size: 15px;
+  color: var(--text-dim);
+}
+
+/* Loading */
+.pubs-loading {
+  grid-column: 1 / -1;
+  text-align: center; padding: 80px 0;
+}
+
+@media (max-width: 1024px) {
+  .pubs-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .pubs-grid { grid-template-columns: 1fr; padding: 24px 20px 60px; }
+  .pubs-filters { padding: 20px 20px 0; }
+  .pubs-overlay-header-inner { padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════ PRELOADER ═══════ -->
+<div class="preloader" id="preloader">
+  <div class="preloader-logo">Mamus Bomfim</div>
+  <div class="preloader-bar"></div>
+</div>
+
+<!-- ═══════ NAVBAR ═══════ -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#hero">
+      <div class="nav-logo-name">Mamus <span></span> Bomfim</div>
+      <div class="nav-logo-sub">Advogados Associados</div>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a class="nav-link" href="#about">O Escritório</a>
+      <a class="nav-link" href="#areas">Áreas de Atuação</a>
+      <a class="nav-link" href="#team">Equipe</a>
+      <a class="nav-link" href="#news">Publicações</a>
+      <a class="nav-link" href="#contact">Contato</a>
+    </div>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<section class="hero" id="hero">
+  <div class="hero-bg" id="heroBg" data-photo-url="https://pfkysmpmoxpzncdifawd.supabase.co/storage/v1/object/public/publication-images/assets/escritorio.jpg">
+    <div class="img-slot">
+      <svg class="img-slot-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      <span class="img-slot-label">Foto principal — fachada, skyline ou imagem institucional (1920×1080)</span>
+    </div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-line"></div>
+    <h1 class="hero-title">
+      <span class="hero-title-line">
+        <span class="hero-title-inner">Tradição, estratégia</span>
+      </span>
+      <span class="hero-title-line">
+        <span class="hero-title-inner"><em>e resultado.</em></span>
+      </span>
+    </h1>
+    <p class="hero-desc">
+      Excelência jurídica há mais de 12 anos. Assessoria completa para empresas e pessoas físicas com a dedicação e a competência que o seu caso exige.
+    </p>
+    <div class="hero-cta">
+      <a class="btn-primary" href="https://wa.me/556634989617?text=Olá!%20Gostaria%20de%20agendar%20uma%20consulta." target="_blank" rel="noopener">Fale Conosco</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span class="hero-scroll-text">Scroll</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══════ MARQUEE ═══════ -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span class="marquee-item">Direito Empresarial</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Contencioso Cível</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Direito Tributário</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Direito Trabalhista</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Direito Imobiliário</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Direito Internacional</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Fusões & Aquisições</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Compliance</span><span class="marquee-dot"></span>
+    <!-- duplicate for seamless loop -->
+    <span class="marquee-item">Direito Empresarial</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Contencioso Cível</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Direito Tributário</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Direito Trabalhista</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Direito Imobiliário</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Direito Internacional</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Fusões & Aquisições</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Compliance</span><span class="marquee-dot"></span>
+  </div>
+</div>
+
+<!-- ═══════ ABOUT ═══════ -->
+<section class="section" id="about">
+  <div class="about-grid">
+    <div class="about-text">
+      <div class="section-label reveal">O Escritório</div>
+      <h2 class="section-title reveal" style="transition-delay:120ms">
+        Uma história de<br><em>compromisso e confiança</em>
+      </h2>
+      <p class="reveal" style="transition-delay:240ms">
+        Fundado em 2013, o escritório Mamus Bomfim nasceu com a missão de oferecer serviços jurídicos de excelência. Ao longo dos anos, construímos uma trajetória sólida, pautada pela ética, transparência e resultados consistentes para nossos clientes.
+      </p>
+      <p class="reveal" style="transition-delay:360ms">
+        Nossa equipe reúne profissionais altamente qualificados, com atuação multidisciplinar e ampla experiência em operações complexas, oferecendo soluções jurídicas personalizadas e estratégicas para cada caso.
+      </p>
+      <div class="about-stats reveal" style="transition-delay:480ms">
+        <div>
+          <div class="stat-number"><span class="counter" data-target="12">0</span><span class="suffix">+</span></div>
+          <div class="stat-label">Anos de Experiência</div>
+        </div>
+        <div>
+          <div class="stat-number"><span class="counter" data-target="500">0</span><span class="suffix">+</span></div>
+          <div class="stat-label">Clientes Atendidos</div>
+        </div>
+        <div>
+          <div class="stat-number"><span class="counter" data-target="98">0</span><span class="suffix">%</span></div>
+          <div class="stat-label">Taxa de Sucesso</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-image reveal-right">
+      <div class="img-slot">
+        <svg class="img-slot-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        <span class="img-slot-label">Foto do escritório — ambiente interno ou sala de reunião</span>
+      </div>
+      <div class="about-image-accent reveal-scale"></div>
+      <div class="about-image-badge reveal-scale">
+        <div class="badge-num">12+</div>
+        <div class="badge-text">Anos</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ AREAS ═══════ -->
+<section class="section-full areas-section" id="areas">
+  <div class="areas-header" style="padding: 0 48px;">
+    <div class="section-label reveal" style="justify-content:center">Expertise</div>
+    <h2 class="section-title reveal" style="text-align:center; transition-delay:120ms">
+      Áreas de <em>Atuação</em>
+    </h2>
+  </div>
+  <div class="areas-grid">
+    <div class="area-card reveal" style="transition-delay:0ms">
+      <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 21h18M3 7v1a3 3 0 006 0V7m0 0a3 3 0 016 0m0 0v1a3 3 0 006 0V7M6 21V10m6 11V10m6 11V10M3 7l9-4 9 4"/></svg></div>
+      <div class="area-name">Direito Empresarial</div>
+      <div class="area-desc">Consultoria estratégica para empresas, contratos, societário, governança corporativa e M&A.</div>
+      <div class="area-arrow">→</div>
+    </div>
+    <div class="area-card reveal" style="transition-delay:80ms">
+      <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+      <div class="area-name">Contencioso Cível</div>
+      <div class="area-desc">Representação judicial e extrajudicial em litígios complexos, mediação e arbitragem.</div>
+      <div class="area-arrow">→</div>
+    </div>
+    <div class="area-card reveal" style="transition-delay:160ms">
+      <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2M12 12v4M8 12v4M16 12v4"/></svg></div>
+      <div class="area-name">Direito Tributário</div>
+      <div class="area-desc">Planejamento tributário, defesa em processos administrativos e judiciais fiscais.</div>
+      <div class="area-arrow">→</div>
+    </div>
+    <div class="area-card reveal" style="transition-delay:240ms">
+      <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+      <div class="area-name">Direito Trabalhista</div>
+      <div class="area-desc">Assessoria preventiva e contenciosa nas relações de trabalho, compliance e reestruturações.</div>
+      <div class="area-arrow">→</div>
+    </div>
+    <div class="area-card reveal" style="transition-delay:320ms">
+      <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+      <div class="area-name">Direito Imobiliário</div>
+      <div class="area-desc">Estruturação de operações imobiliárias, due diligence, regularização e financiamento.</div>
+      <div class="area-arrow">→</div>
+    </div>
+    <div class="area-card reveal" style="transition-delay:400ms">
+      <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
+      <div class="area-name">Direito Internacional</div>
+      <div class="area-desc">Assessoria em operações cross-border, investimentos estrangeiros e comércio exterior.</div>
+      <div class="area-arrow">→</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PARALLAX DIVIDER ═══════ -->
+<div class="parallax-divider" id="parallaxDiv">
+  <div class="img-slot" id="parallaxBg" style="position:absolute;inset:0;width:100%;height:130%;">
+    <svg class="img-slot-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+    <span class="img-slot-label">Foto panorâmica — cidade, detalhe arquitetônico ou biblioteca jurídica</span>
+  </div>
+  <div class="parallax-divider-overlay">
+    <blockquote class="parallax-quote reveal">
+      "A justiça é a <em>constante e perpétua vontade</em> de dar a cada um o que lhe é devido."
+    </blockquote>
+  </div>
+</div>
+
+<!-- ═══════ TEAM ═══════ -->
+<section class="section" id="team">
+  <div class="team-header">
+    <div class="section-label reveal" style="justify-content:center">Profissionais</div>
+    <h2 class="section-title reveal" style="text-align:center; transition-delay:120ms">
+      Nossa <em>Equipe</em>
+    </h2>
+  </div>
+
+  <!-- Sócios Principais — 2 colunas grandes -->
+  <div class="team-socios" style="display:grid; grid-template-columns:1fr 1fr; gap:48px; margin-bottom:64px;">
+    <div class="team-card reveal" style="transition-delay:0ms"
+      data-name="Dr. Bruno César Mamus"
+      data-role="Sócio Fundador"
+      data-oab="OAB/XX 00.000"
+      data-photo="Foto — Dr. Bruno César Mamus"
+      data-photo-url="https://pfkysmpmoxpzncdifawd.supabase.co/storage/v1/object/public/publication-images/assets/bruno-mamus.jpeg"
+      data-areas="Direito Empresarial,Contratos,Societário"
+      data-bio="Graduado em Direito com especialização em Direito Empresarial e ampla experiência em operações societárias complexas. Ao longo de sua carreira, assessorou empresas de diversos portes em questões envolvendo governança corporativa, fusões e aquisições, reestruturações societárias e planejamento estratégico. Reconhecido por sua atuação consultiva de excelência e pela capacidade de encontrar soluções jurídicas criativas e eficientes para os desafios de seus clientes."
+      data-email="bruno@mamusbomfim.com">
+      <div class="team-card-img">
+        <div class="img-slot" style="aspect-ratio:3/4;">
+          <svg class="img-slot-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span class="img-slot-label">Foto — Dr. Bruno César Mamus</span>
+        </div>
+        <div class="team-card-overlay">
+          <div class="team-card-overlay-text">Ver Perfil →</div>
+        </div>
+      </div>
+      <div class="team-name" style="font-size:24px; margin-top:4px;">Dr. Bruno César Mamus</div>
+      <div class="team-role">Sócio Fundador</div>
+      <div class="team-area">Direito Empresarial e Societário</div>
+      <div class="team-oab">OAB/XX 00.000</div>
+    </div>
+    <div class="team-card reveal" style="transition-delay:150ms"
+      data-name="Dr. André Luiz Bomfim"
+      data-role="Sócio Fundador"
+      data-oab="OAB/XX 00.000"
+      data-photo="Foto — Dr. André Luiz Bomfim"
+      data-photo-url=""
+      data-areas="Contencioso Cível,Arbitragem,Mediação"
+      data-bio="Advogado com sólida formação acadêmica e vasta experiência em contencioso estratégico e resolução de disputas. Atua na representação judicial e extrajudicial de empresas e pessoas físicas em litígios de alta complexidade, incluindo arbitragem e mediação. Sua abordagem combina rigor técnico com visão estratégica, buscando sempre os melhores resultados para seus clientes com agilidade e segurança jurídica."
+      data-email="andre@mamusbomfim.com">
+      <div class="team-card-img">
+        <div class="img-slot" style="aspect-ratio:3/4;">
+          <svg class="img-slot-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span class="img-slot-label">Foto — Dr. André Luiz Bomfim</span>
+        </div>
+        <div class="team-card-overlay">
+          <div class="team-card-overlay-text">Ver Perfil →</div>
+        </div>
+      </div>
+      <div class="team-name" style="font-size:24px; margin-top:4px;">Dr. André Luiz Bomfim</div>
+      <div class="team-role">Sócio Fundador</div>
+      <div class="team-area">Contencioso Cível e Arbitragem</div>
+      <div class="team-oab">OAB/XX 00.000</div>
+    </div>
+  </div>
+
+  <!-- Associados — 3 colunas menores -->
+  <div class="team-associados" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:32px;">
+    <div class="team-card reveal" style="transition-delay:0ms"
+      data-name="Dr(a). Nome Sobrenome"
+      data-role="Associado(a)"
+      data-oab="OAB/XX 00.000"
+      data-photo="Foto — Associado(a) 1"
+      data-photo-url=""
+      data-areas="Direito Tributário,Planejamento Fiscal"
+      data-bio="Profissional com experiência em direito tributário, atuando tanto na esfera consultiva quanto na contenciosa. Assessora empresas em planejamento tributário, defesa em processos administrativos e judiciais fiscais, além de acompanhar as constantes mudanças na legislação tributária brasileira."
+      data-email="contato@mamusbomfim.com">
+      <div class="team-card-img">
+        <div class="img-slot" style="aspect-ratio:3/4;">
+          <svg class="img-slot-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span class="img-slot-label">Foto — Associado(a) 1</span>
+        </div>
+        <div class="team-card-overlay">
+          <div class="team-card-overlay-text">Ver Perfil →</div>
+        </div>
+      </div>
+      <div class="team-name">Dr(a). Nome Sobrenome</div>
+      <div class="team-role">Associado(a)</div>
+      <div class="team-area">Direito Tributário</div>
+      <div class="team-oab">OAB/XX 00.000</div>
+    </div>
+    <div class="team-card reveal" style="transition-delay:120ms"
+      data-name="Dr(a). Nome Sobrenome"
+      data-role="Associado(a)"
+      data-oab="OAB/XX 00.000"
+      data-photo="Foto — Associado(a) 2"
+      data-photo-url=""
+      data-areas="Direito Trabalhista,Compliance"
+      data-bio="Atua na área trabalhista com foco em assessoria preventiva e contenciosa. Experiência em reestruturações, negociações coletivas, compliance trabalhista e representação em processos judiciais e administrativos. Busca sempre a solução mais eficiente para preservar os interesses de seus clientes."
+      data-email="contato@mamusbomfim.com">
+      <div class="team-card-img">
+        <div class="img-slot" style="aspect-ratio:3/4;">
+          <svg class="img-slot-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span class="img-slot-label">Foto — Associado(a) 2</span>
+        </div>
+        <div class="team-card-overlay">
+          <div class="team-card-overlay-text">Ver Perfil →</div>
+        </div>
+      </div>
+      <div class="team-name">Dr(a). Nome Sobrenome</div>
+      <div class="team-role">Associado(a)</div>
+      <div class="team-area">Direito Trabalhista</div>
+      <div class="team-oab">OAB/XX 00.000</div>
+    </div>
+    <div class="team-card reveal" style="transition-delay:240ms"
+      data-name="Dr(a). Nome Sobrenome"
+      data-role="Associado(a)"
+      data-oab="OAB/XX 00.000"
+      data-photo="Foto — Associado(a) 3"
+      data-photo-url=""
+      data-areas="Direito Imobiliário,Contratos"
+      data-bio="Especialista em operações imobiliárias, com experiência em estruturação de negócios, due diligence, regularização fundiária e contratos de compra e venda, locação e incorporação. Presta assessoria completa a incorporadoras, construtoras e investidores do setor."
+      data-email="contato@mamusbomfim.com">
+      <div class="team-card-img">
+        <div class="img-slot" style="aspect-ratio:3/4;">
+          <svg class="img-slot-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span class="img-slot-label">Foto — Associado(a) 3</span>
+        </div>
+        <div class="team-card-overlay">
+          <div class="team-card-overlay-text">Ver Perfil →</div>
+        </div>
+      </div>
+      <div class="team-name">Dr(a). Nome Sobrenome</div>
+      <div class="team-role">Associado(a)</div>
+      <div class="team-area">Direito Imobiliário</div>
+      <div class="team-oab">OAB/XX 00.000</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PROFILE MODAL ═══════ -->
+<div class="profile-modal-backdrop" id="profileBackdrop"></div>
+<div class="profile-modal" id="profileModal">
+  <button class="profile-modal-close" id="profileClose" aria-label="Fechar">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+  </button>
+  <div class="profile-modal-photo">
+    <div class="img-slot" id="profilePhoto">
+      <svg class="img-slot-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      <span class="img-slot-label" id="profilePhotoLabel">Foto</span>
+    </div>
+  </div>
+  <div class="profile-modal-content">
+    <div class="profile-modal-label">Perfil Profissional</div>
+    <div class="profile-modal-name" id="profileName"></div>
+    <div class="profile-modal-role" id="profileRole"></div>
+    <div class="profile-modal-oab" id="profileOab"></div>
+    <div class="profile-modal-divider"></div>
+    <div class="profile-modal-bio" id="profileBio"></div>
+    <div class="profile-modal-areas" id="profileAreas"></div>
+    <div class="profile-modal-contact">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--gold)"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <a id="profileEmail" href=""></a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ NEWS ARTICLE MODAL ═══════ -->
+<div class="news-modal-backdrop" id="newsBackdrop"></div>
+<div class="news-modal" id="newsModal">
+  <button class="news-modal-close" id="newsClose" aria-label="Fechar">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+  </button>
+  <div class="news-modal-hero" id="newsHero">
+    <div class="img-slot">
+      <svg class="img-slot-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      <span class="img-slot-label">Imagem da publicação</span>
+    </div>
+    <div class="news-modal-hero-gradient"></div>
+  </div>
+  <div class="news-modal-body">
+    <div class="news-modal-meta">
+      <span class="news-modal-tag" id="newsModalTag"></span>
+      <span class="news-modal-date" id="newsModalDate"></span>
+    </div>
+    <h2 class="news-modal-title" id="newsModalTitle"></h2>
+    <p class="news-modal-excerpt" id="newsModalExcerpt"></p>
+    <div class="news-modal-divider"></div>
+    <div class="news-modal-content" id="newsModalContent"></div>
+  </div>
+</div>
+
+<!-- ═══════ NEWS ═══════ -->
+<section class="section-full news-section" id="news" style="padding-bottom:160px;">
+  <div class="news-header" style="padding:0 48px; margin-bottom:64px;">
+    <div>
+      <div class="section-label reveal">Publicações</div>
+      <h2 class="section-title reveal" style="transition-delay:120ms">
+        Informação <em>& Conhecimento</em>
+      </h2>
+    </div>
+    <a class="news-link reveal" style="transition-delay:240ms; cursor:pointer;" onclick="openAllPubs()">Ver Todas →</a>
+  </div>
+  <!-- Publicações carregadas dinamicamente via Supabase -->
+  <div class="news-grid" id="news-grid" style="padding:0 48px;">
+    <!-- Conteúdo injetado por /js/public-news.js -->
+  </div>
+</section>
+
+<!-- ═══════ CTA BANNER ═══════ -->
+<section class="cta-banner">
+  <div class="img-slot" style="position:absolute;inset:0;width:100%;height:100%;">
+    <svg class="img-slot-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+    <span class="img-slot-label">Foto — detalhe de escritório ou cidade à noite</span>
+  </div>
+  <div class="cta-overlay"></div>
+  <div class="cta-content">
+    <h2 class="reveal">Conte com a nossa experiência para <em>proteger o que é seu.</em></h2>
+    <p class="reveal" style="transition-delay:150ms">Agende uma consulta com nossos especialistas e descubra como podemos ajudar no seu caso.</p>
+    <div class="reveal" style="transition-delay:300ms">
+      <a class="btn-gold" href="https://wa.me/556634989617?text=Olá!%20Gostaria%20de%20agendar%20uma%20consulta." target="_blank" rel="noopener">Agendar Consulta</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CONTACT ═══════ -->
+<section class="section" id="contact">
+  <div class="contact-grid">
+    <div>
+      <div class="section-label reveal">Contato</div>
+      <h2 class="section-title reveal" style="margin-bottom:48px; transition-delay:120ms">
+        Fale <em>Conosco</em>
+      </h2>
+      <div class="office reveal" style="transition-delay:240ms">
+        <div class="office-name">Mamus Bomfim Advogados Associados</div>
+        <div class="office-details">
+          Av. Paraná, 769, esq. com Av. Cuiabá<br>
+          Primavera II — Primavera do Leste/MT<br>
+          CEP: 78850-000<br><br>
+          <strong>Tel:</strong> (66) 3498-9617
+          <a href="https://wa.me/556634989617?text=Olá!%20Gostaria%20de%20agendar%20uma%20consulta." target="_blank" rel="noopener" class="wpp-link" title="Abrir no WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+          <br>
+          <strong>Email:</strong> <a href="mailto:contato@mamusbomfim.com" style="color:var(--text-muted); transition:color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text-muted)'">contato@mamusbomfim.com</a>
+        </div>
+      </div>
+      <div class="contact-hours reveal" style="transition-delay:360ms">
+        <div class="contact-hours-label">Horário de Atendimento</div>
+        <div class="contact-hours-value">Segunda a Sexta, das 8h às 18h</div>
+      </div>
+
+      <!-- Google Maps embed -->
+      <div class="reveal" style="transition-delay:480ms; margin-top:36px;">
+        <iframe
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=Av+Paraná+769+Primavera+do+Leste+MT&zoom=16"
+          width="100%" height="220" style="border:1px solid var(--gold-line); "
+          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+    <div class="contact-images reveal-right">
+      <div class="img-slot">
+        <svg class="img-slot-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        <span class="img-slot-label">Fachada do escritório</span>
+      </div>
+      <div class="contact-images-row">
+        <div class="img-slot">
+          <svg class="img-slot-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span class="img-slot-label">Interior 1</span>
+        </div>
+        <div class="img-slot">
+          <svg class="img-slot-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span class="img-slot-label">Interior 2</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ ALL PUBLICATIONS OVERLAY ═══════ -->
+<div class="pubs-overlay" id="pubsOverlay">
+  <div class="pubs-overlay-header">
+    <div class="pubs-overlay-header-inner">
+      <h2 class="pubs-overlay-title">Todas as <em>Publicações</em></h2>
+      <button class="pubs-overlay-close" id="pubsClose" aria-label="Fechar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="pubs-filters" id="pubsFilters">
+    <button class="pubs-filter-btn active" data-filter="all">Todas</button>
+    <button class="pubs-filter-btn" data-filter="Artigo">Artigos</button>
+    <button class="pubs-filter-btn" data-filter="Notícia">Notícias</button>
+    <button class="pubs-filter-btn" data-filter="Evento">Eventos</button>
+    <span class="pubs-counter" id="pubsCounter"></span>
+  </div>
+  <div class="pubs-grid" id="pubsGrid">
+    <div class="pubs-loading"><span class="spinner" style="width:24px;height:24px;"></span></div>
+  </div>
+</div>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand-name">Mamus & Bomfim</div>
+      <p class="footer-brand-desc">
+        Av. Paraná, 769, esq. com Av. Cuiabá<br>
+        Primavera II — Primavera do Leste/MT, 78850-000<br>
+        <span style="margin-top:8px; display:inline-block;">(66) 3498-9617 · <a href="mailto:contato@mamusbomfim.com" style="color:inherit;">contato@mamusbomfim.com</a></span>
+      </p>
+    </div>
+    <div>
+      <div class="footer-col-title">Institucional</div>
+      <a class="footer-link" href="#about">O Escritório</a>
+      <a class="footer-link" href="#areas">Áreas de Atuação</a>
+      <a class="footer-link" href="#team">Equipe</a>
+      <a class="footer-link" href="#news">Publicações</a>
+    </div>
+    <div>
+      <div class="footer-col-title">Áreas</div>
+      <a class="footer-link" href="#areas">Empresarial</a>
+      <a class="footer-link" href="#areas">Cível</a>
+      <a class="footer-link" href="#areas">Tributário</a>
+      <a class="footer-link" href="#areas">Trabalhista</a>
+    </div>
+    <div>
+      <div class="footer-col-title">Contato Rápido</div>
+      <a class="footer-link" href="https://wa.me/556634989617?text=Olá!%20Gostaria%20de%20agendar%20uma%20consulta." target="_blank" rel="noopener" style="color:#25d366;">WhatsApp</a>
+      <a class="footer-link" href="mailto:contato@mamusbomfim.com">Email</a>
+      <a class="footer-link" href="tel:+556634989617">Telefone</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Mamus Bomfim Advogados Associados. Todos os direitos reservados.</span>
+    <div class="footer-socials">
+      <a class="footer-social" href="https://wa.me/556634989617" target="_blank" rel="noopener">WhatsApp</a>
+      <a class="footer-social" href="https://www.instagram.com/mamusbomfimadvogados/" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════
+     JAVASCRIPT — Animations Engine
+     ═══════════════════════════════════════════════════════ -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+(function() {
+  'use strict';
+
+  // ── PRELOADER ──
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('preloader').classList.add('hidden');
+    }, 2400);
+  });
+
+  // ── NAVBAR SCROLL ──
+  const nav = document.getElementById('nav');
+  let lastY = 0;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    nav.classList.toggle('scrolled', y > 80);
+    lastY = y;
+  }, { passive: true });
+
+  // ── MOBILE HAMBURGER ──
+  const hamburger = document.getElementById('navHamburger');
+  const navLinks  = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navLinks.classList.toggle('mobile-open');
+  });
+  // Close mobile nav on link click
+  navLinks.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      navLinks.classList.remove('mobile-open');
+    });
+  });
+
+  // ── SCROLL REVEAL (Intersection Observer) ──
+  const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .reveal-clip, .line-draw');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // Don't unobserve — one-time animation
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.15,
+    rootMargin: '0px 0px -60px 0px'
+  });
+  revealElements.forEach(el => revealObserver.observe(el));
+
+  // ── COUNTER ANIMATION ──
+  const counters = document.querySelectorAll('.counter');
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.dataset.target);
+        const duration = 2000;
+        const startTime = performance.now();
+
+        function easeOutExpo(t) {
+          return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+        }
+
+        function animate(now) {
+          const elapsed = now - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          const easedProgress = easeOutExpo(progress);
+          el.textContent = Math.round(target * easedProgress);
+          if (progress < 1) requestAnimationFrame(animate);
+        }
+        requestAnimationFrame(animate);
+        counterObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(el => counterObserver.observe(el));
+
+  // ── PARALLAX ──
+  const heroBg = document.getElementById('heroBg');
+  const parallaxBg = document.getElementById('parallaxBg');
+
+  function updateParallax() {
+    const scrollY = window.scrollY;
+    const vh = window.innerHeight;
+
+    // Hero parallax
+    if (heroBg && scrollY < vh * 1.5) {
+      heroBg.style.transform = `translateY(${scrollY * 0.35}px) scale(${1 + scrollY * 0.0001})`;
+    }
+
+    // Divider parallax
+    if (parallaxBg) {
+      const divider = document.getElementById('parallaxDiv');
+      const rect = divider.getBoundingClientRect();
+      if (rect.top < vh && rect.bottom > 0) {
+        const progress = (vh - rect.top) / (vh + rect.height);
+        parallaxBg.style.transform = `translateY(${(progress - 0.5) * -80}px)`;
+      }
+    }
+  }
+
+  window.addEventListener('scroll', () => requestAnimationFrame(updateParallax), { passive: true });
+
+  // ── SMOOTH ANCHOR LINKS ──
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // ── PROFILE MODAL ──
+  const modal     = document.getElementById('profileModal');
+  const backdrop  = document.getElementById('profileBackdrop');
+  const closeBtn  = document.getElementById('profileClose');
+
+  // ── INJECT REAL PHOTOS from data-photo-url ──
+  // This allows using photos uploaded to Supabase Storage bucket
+  document.querySelectorAll('[data-photo-url]').forEach(el => {
+    const url = el.dataset.photoUrl?.trim();
+    if (!url) return;
+    const slot = el.querySelector('.img-slot');
+    if (!slot) return;
+    const img = document.createElement('img');
+    img.src = url;
+    img.alt = el.dataset.name || 'Foto';
+    img.className = 'img-slot-photo';
+    img.loading = 'lazy';
+    slot.appendChild(img);
+  });
+
+  function openProfile(card) {
+    // Populate modal from data attributes
+    document.getElementById('profileName').textContent  = card.dataset.name;
+    document.getElementById('profileRole').textContent   = card.dataset.role;
+    document.getElementById('profileOab').textContent    = card.dataset.oab;
+    document.getElementById('profileBio').textContent    = card.dataset.bio;
+    document.getElementById('profilePhotoLabel').textContent = card.dataset.photo;
+
+    // Real photo in modal (if provided)
+    const modalSlot = document.getElementById('profilePhoto');
+    const existingImg = modalSlot.querySelector('img.img-slot-photo');
+    if (existingImg) existingImg.remove();
+    const photoUrl = card.dataset.photoUrl?.trim();
+    if (photoUrl) {
+      const img = document.createElement('img');
+      img.src = photoUrl;
+      img.alt = card.dataset.name || 'Foto';
+      img.className = 'img-slot-photo';
+      modalSlot.appendChild(img);
+    }
+
+    // Areas as tags
+    const areasContainer = document.getElementById('profileAreas');
+    const areas = card.dataset.areas.split(',');
+    areasContainer.innerHTML = areas.map(a =>
+      `<span class="profile-modal-area-tag">${a.trim()}</span>`
+    ).join('');
+
+    // Email
+    const emailLink = document.getElementById('profileEmail');
+    emailLink.textContent = card.dataset.email;
+    emailLink.href = 'mailto:' + card.dataset.email;
+
+    // Open with animation
+    document.body.style.overflow = 'hidden';
+    backdrop.classList.add('open');
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        modal.classList.add('open');
+      });
+    });
+  }
+
+  function closeProfile() {
+    modal.classList.remove('open');
+    backdrop.classList.remove('open');
+    // Only restore scroll if no overlay is open
+    if (!document.querySelector('.pubs-overlay.open')) {
+      document.body.style.overflow = '';
+    }
+  }
+
+  // Click handlers on all team cards
+  document.querySelectorAll('.team-card[data-name]').forEach(card => {
+    card.addEventListener('click', () => openProfile(card));
+  });
+
+  // Close handlers
+  closeBtn.addEventListener('click', closeProfile);
+  backdrop.addEventListener('click', closeProfile);
+
+  // ── NEWS ARTICLE MODAL ──
+  const newsModal     = document.getElementById('newsModal');
+  const newsBackdrop  = document.getElementById('newsBackdrop');
+  const newsCloseBtn  = document.getElementById('newsClose');
+
+  window.openNewsModal = function(pub) {
+    // Hero image
+    const heroEl = document.getElementById('newsHero');
+    var existingImg = heroEl.querySelector('img');
+    if (existingImg) existingImg.remove();
+    if (pub.image_url) {
+      var img = document.createElement('img');
+      img.src = pub.image_url;
+      img.alt = pub.title;
+      heroEl.insertBefore(img, heroEl.firstChild);
+      heroEl.style.display = '';
+    } else {
+      heroEl.style.display = 'none';
+    }
+
+    // Meta
+    document.getElementById('newsModalTag').textContent   = pub.tag;
+    document.getElementById('newsModalDate').textContent   = formatDate(pub.published_at);
+    document.getElementById('newsModalTitle').textContent  = pub.title;
+    document.getElementById('newsModalExcerpt').textContent = pub.excerpt;
+
+    // Content — converte quebras de linha em parágrafos
+    var contentEl = document.getElementById('newsModalContent');
+    var rawContent = pub.content || '';
+    if (rawContent) {
+      var paragraphs = rawContent.split(/\n\n|\n/).filter(function(p) { return p.trim(); });
+      contentEl.innerHTML = paragraphs.map(function(p) {
+        return '<p>' + p.trim() + '</p>';
+      }).join('');
+    } else {
+      contentEl.innerHTML = '<p style="color:var(--text-dim); font-style:italic;">Conteúdo completo em breve.</p>';
+    }
+
+    // Open
+    document.body.style.overflow = 'hidden';
+    newsBackdrop.classList.add('open');
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        newsModal.classList.add('open');
+      });
+    });
+  };
+
+  function closeNewsModal() {
+    newsModal.classList.remove('open');
+    newsBackdrop.classList.remove('open');
+    // Only restore scroll if no overlay is open
+    if (!document.querySelector('.pubs-overlay.open')) {
+      document.body.style.overflow = '';
+    }
+  }
+
+  newsCloseBtn.addEventListener('click', closeNewsModal);
+  newsBackdrop.addEventListener('click', closeNewsModal);
+
+  // ── ALL PUBLICATIONS OVERLAY ──
+  var pubsOverlay = document.getElementById('pubsOverlay');
+  var pubsGrid    = document.getElementById('pubsGrid');
+  var pubsCounter = document.getElementById('pubsCounter');
+  var allPubsData = [];
+  var allPubsLoaded = false;
+  var currentFilter = 'all';
+
+  window.openAllPubs = async function() {
+    // Open overlay
+    document.body.style.overflow = 'hidden';
+    pubsOverlay.classList.add('open');
+
+    // Load data if not cached
+    if (!allPubsLoaded) {
+      pubsGrid.innerHTML = '<div class="pubs-loading"><span class="spinner" style="width:24px;height:24px;"></span></div>';
+
+      try {
+        var result = await db
+          .from('publications')
+          .select('id, title, slug, tag, excerpt, content, image_url, published_at')
+          .eq('published', true)
+          .order('published_at', { ascending: false });
+
+        if (result.error) throw result.error;
+        allPubsData = result.data || [];
+        allPubsLoaded = true;
+      } catch (err) {
+        console.error('[Pubs] Error loading all:', err);
+        pubsGrid.innerHTML = '<div class="pubs-empty">Erro ao carregar publicações.</div>';
+        return;
+      }
+    }
+
+    currentFilter = 'all';
+    setActiveFilter('all');
+    renderAllPubs(allPubsData);
+  };
+
+  function closeAllPubs() {
+    pubsOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('pubsClose').addEventListener('click', closeAllPubs);
+
+  // ── UNIFIED ESCAPE HANDLER — closes topmost layer first ──
+  document.addEventListener('keydown', function(e) {
+    if (e.key !== 'Escape') return;
+    // Priority: detail modals first, then overlay
+    if (newsModal.classList.contains('open')) { closeNewsModal(); return; }
+    if (modal.classList.contains('open')) { closeProfile(); return; }
+    if (pubsOverlay.classList.contains('open')) { closeAllPubs(); return; }
+  });
+
+  // Filters
+  document.getElementById('pubsFilters').addEventListener('click', function(e) {
+    var btn = e.target.closest('.pubs-filter-btn');
+    if (!btn) return;
+    var filter = btn.getAttribute('data-filter');
+    currentFilter = filter;
+    setActiveFilter(filter);
+    var filtered = filter === 'all'
+      ? allPubsData
+      : allPubsData.filter(function(p) { return p.tag === filter; });
+    renderAllPubs(filtered);
+  });
+
+  function setActiveFilter(filter) {
+    document.querySelectorAll('.pubs-filter-btn').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-filter') === filter);
+    });
+  }
+
+  function renderAllPubs(pubs) {
+    pubsCounter.textContent = pubs.length + (pubs.length === 1 ? ' publicação' : ' publicações');
+
+    if (pubs.length === 0) {
+      pubsGrid.innerHTML = '<div class="pubs-empty">Nenhuma publicação encontrada nesta categoria.</div>';
+      return;
+    }
+
+    pubsGrid.innerHTML = pubs.map(function(pub, i) {
+      var imgHtml = pub.image_url
+        ? '<img src="' + pub.image_url + '" alt="' + pub.title + '" style="width:100%;height:100%;object-fit:cover;aspect-ratio:16/10;display:block;transition:transform 1s var(--ease-out);">'
+        : '<div class="img-slot" style="aspect-ratio:16/10">' +
+            '<svg class="img-slot-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>' +
+            '<span class="img-slot-label">Imagem — ' + pub.tag + '</span></div>';
+
+      return '<article class="news-card" data-pub-id="' + pub.id + '" style="animation-delay:' + (i * 60) + 'ms; cursor:pointer;">' +
+        '<div class="news-card-img">' + imgHtml + '</div>' +
+        '<div class="news-card-body">' +
+          '<div class="news-card-meta">' +
+            '<span class="news-tag">' + pub.tag + '</span>' +
+            '<span class="news-date">' + formatDate(pub.published_at) + '</span>' +
+          '</div>' +
+          '<h3 class="news-title">' + pub.title + '</h3>' +
+          '<p class="news-excerpt">' + pub.excerpt + '</p>' +
+          '<span style="font-family:var(--sans);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-top:16px;display:inline-block;opacity:0.6;">Ler mais →</span>' +
+        '</div></article>';
+    }).join('');
+
+    // Click to open detail modal
+    pubsGrid.querySelectorAll('.news-card[data-pub-id]').forEach(function(card) {
+      card.addEventListener('click', function() {
+        var pubId = card.getAttribute('data-pub-id');
+        var pub = allPubsData.find(function(p) { return p.id === pubId; });
+        if (pub) openNewsModal(pub);
+      });
+    });
+  }
+
+  // ── MAGNETIC HOVER on buttons (subtle) ──
+  document.querySelectorAll('.btn-primary, .btn-gold').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      btn.style.transform = `translate(${x * 0.1}px, ${y * 0.15}px)`;
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = '';
+    });
+  });
+
+})();
+</script>
+
+<!-- ═══════ SUPABASE — Publicações Dinâmicas ═══════ -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/supabase-config.js"></script>
+<script src="/js/public-news.js"></script>
+
+</body>
+</html>

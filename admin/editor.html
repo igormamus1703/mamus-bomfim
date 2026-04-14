@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editor — Mamus & Bomfim</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/admin/css/admin.css">
+</head>
+<body>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Header -->
+  <header class="admin-header">
+    <a href="/admin/dashboard.html" class="admin-header-logo">
+      Mamus Bomfim <span>Painel Admin</span>
+    </a>
+    <div class="admin-header-right">
+      <span class="admin-header-user" id="user-email"></span>
+      <a href="/" class="btn btn-outline btn-sm" style="font-size:10px">Ver Site</a>
+      <button class="btn btn-outline btn-sm" onclick="handleLogout()" style="font-size:10px">Sair</button>
+    </div>
+  </header>
+
+  <!-- Body -->
+  <main class="admin-body">
+
+    <!-- Top Bar -->
+    <div class="editor-top">
+      <h1 class="editor-title" id="editor-heading">Nova <em>Publicação</em></h1>
+      <a href="/admin/dashboard.html" class="btn btn-outline btn-sm">← Voltar</a>
+    </div>
+
+    <!-- Form -->
+    <form class="editor-card" onsubmit="handleSave(event)">
+
+      <!-- Título -->
+      <div class="form-group">
+        <label class="form-label" for="title">Título *</label>
+        <input class="form-input" type="text" id="title" placeholder="Ex: Reforma Tributária — O que muda para sua empresa" required>
+      </div>
+
+      <!-- Slug + Tag -->
+      <div class="editor-row">
+        <div class="form-group">
+          <label class="form-label" for="slug">Slug (URL) *</label>
+          <input class="form-input" type="text" id="slug" placeholder="gerado-automaticamente" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="tag">Tipo *</label>
+          <select class="form-input" id="tag" required>
+            <option value="">Selecione...</option>
+            <option value="Artigo">Artigo</option>
+            <option value="Notícia">Notícia</option>
+            <option value="Evento">Evento</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Data + Imagem -->
+      <div class="editor-row">
+        <div class="form-group">
+          <label class="form-label" for="published_at">Data de Publicação</label>
+          <input class="form-input" type="datetime-local" id="published_at">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="image_url">Imagem (URL ou upload)</label>
+          <div style="display:flex; gap:8px;">
+            <input class="form-input" type="url" id="image_url" placeholder="https://... ou faça upload" style="flex:1">
+            <button class="btn btn-outline btn-sm" type="button" id="upload-btn" onclick="handleImageUpload()" style="white-space:nowrap">
+              Upload
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Image Preview -->
+      <div id="image-preview" style="display:none; margin-bottom:20px;"></div>
+
+      <!-- Resumo -->
+      <div class="form-group">
+        <label class="form-label" for="excerpt">Resumo / Chamada *</label>
+        <textarea class="form-input" id="excerpt" rows="3" placeholder="Breve descrição que aparecerá na listagem do site (2-3 linhas)." required></textarea>
+      </div>
+
+      <!-- Conteúdo -->
+      <div class="form-group">
+        <label class="form-label" for="content">Conteúdo Completo</label>
+        <textarea class="form-input" id="content" rows="10" placeholder="Texto completo da publicação (opcional — para página individual futura)."></textarea>
+      </div>
+
+      <!-- Toggle Published -->
+      <div class="editor-toggle" id="toggle-published">
+        <div class="toggle-track">
+          <div class="toggle-thumb"></div>
+        </div>
+        <span class="toggle-label">Rascunho</span>
+      </div>
+
+      <!-- Actions -->
+      <div class="editor-actions">
+        <button class="btn btn-primary" type="submit" id="save-btn">
+          Salvar Publicação
+        </button>
+        <a href="/admin/dashboard.html" class="btn btn-outline">Cancelar</a>
+      </div>
+
+    </form>
+
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/supabase-config.js"></script>
+  <script src="/admin/js/auth.js"></script>
+  <script src="/admin/js/editor.js"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Mamus & Bomfim</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/admin/css/admin.css">
+</head>
+<body>
+
+  <div class="login-page">
+    <div class="login-box">
+      <div class="login-logo">Mamus <span>&</span> Bomfim</div>
+      <div class="login-sub">Painel Administrativo</div>
+
+      <div class="login-card">
+        <h2>Bem-vindo</h2>
+        <p>Acesse o painel de gestão de conteúdo.</p>
+
+        <!-- Mensagem de erro -->
+        <div id="login-error" style="
+          display:none; margin-bottom:20px; padding:12px 16px;
+          background:rgba(224,85,85,0.1); border:1px solid rgba(224,85,85,0.25);
+          border-radius:6px; color:#e05555; font-size:13px; text-align:left;
+        "></div>
+
+        <form onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label class="form-label" for="email">Email</label>
+            <input class="form-input" type="email" id="email" placeholder="admin@escritorio.com.br" required autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="password">Senha</label>
+            <input class="form-input" type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+          </div>
+          <button class="btn btn-primary btn-block" type="submit" id="login-btn" style="margin-top:8px">
+            Entrar
+          </button>
+        </form>
+      </div>
+
+      <p style="margin-top:32px; font-size:12px; color:rgba(255,255,255,0.15);">
+        <a href="/" style="color:rgba(255,255,255,0.25); transition:color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='rgba(255,255,255,0.25)'">
+          ← Voltar ao site
+        </a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/supabase-config.js"></script>
+  <script src="/admin/js/auth.js"></script>
+
+  <!-- Se já logado, redireciona -->
+  <script>
+    (async () => {
+      const { data: { session } } = await db.auth.getSession();
+      if (session) window.location.href = '/admin/dashboard.html';
+    })();
+  </script>
+</body>
+</html>
