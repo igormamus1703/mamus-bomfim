@@ -163,10 +163,13 @@ body::before {
 }
 /* Hide placeholder elements when a real photo is present */
 .img-slot:has(img.img-slot-photo) .img-slot-icon,
-.img-slot:has(img.img-slot-photo) .img-slot-label {
+.img-slot:has(img.img-slot-photo) .img-slot-label,
+.img-slot.has-photo .img-slot-icon,
+.img-slot.has-photo .img-slot-label {
   display: none;
 }
-.img-slot:has(img.img-slot-photo)::before { opacity: 0; }
+.img-slot:has(img.img-slot-photo)::before,
+.img-slot.has-photo::before { opacity: 0; }
 
 /* ═══════════════════════════════════════════════════════
    NAVBAR
@@ -1377,7 +1380,7 @@ body::before {
 
 <!-- ═══════ HERO ═══════ -->
 <section class="hero" id="hero">
-  <div class="hero-bg" id="heroBg">
+  <div class="hero-bg" id="heroBg" data-photo-url="https://pfkysmpmoxpzncdifawd.supabase.co/storage/v1/object/public/publication-images/assets/escritorio.jpg">
     <div class="img-slot">
       <svg class="img-slot-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
       <span class="img-slot-label">Foto principal — fachada, skyline ou imagem institucional (1920×1080)</span>
@@ -1459,7 +1462,7 @@ body::before {
         </div>
       </div>
     </div>
-    <div class="about-image reveal-right">
+    <div class="about-image reveal-right" data-photo-url="">
       <div class="img-slot">
         <svg class="img-slot-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
         <span class="img-slot-label">Foto do escritório — ambiente interno ou sala de reunião</span>
@@ -1995,7 +1998,6 @@ body::before {
   const closeBtn  = document.getElementById('profileClose');
 
   // ── INJECT REAL PHOTOS from data-photo-url ──
-  // This allows using photos uploaded to Supabase Storage bucket
   document.querySelectorAll('[data-photo-url]').forEach(el => {
     const url = el.dataset.photoUrl?.trim();
     if (!url) return;
@@ -2005,7 +2007,23 @@ body::before {
     img.src = url;
     img.alt = el.dataset.name || 'Foto';
     img.className = 'img-slot-photo';
-    img.loading = 'lazy';
+
+    // Only lazy-load images below the fold
+    const rect = el.getBoundingClientRect();
+    if (rect.top > window.innerHeight) {
+      img.loading = 'lazy';
+    }
+
+    // When image loads, add class to hide placeholder (fallback for :has())
+    img.onload = function() {
+      slot.classList.add('has-photo');
+    };
+    // If image fails, don't break layout
+    img.onerror = function() {
+      img.remove();
+      console.warn('[Photo] Failed to load:', url);
+    };
+
     slot.appendChild(img);
   });
 
@@ -2021,12 +2039,15 @@ body::before {
     const modalSlot = document.getElementById('profilePhoto');
     const existingImg = modalSlot.querySelector('img.img-slot-photo');
     if (existingImg) existingImg.remove();
+    modalSlot.classList.remove('has-photo');
     const photoUrl = card.dataset.photoUrl?.trim();
     if (photoUrl) {
       const img = document.createElement('img');
       img.src = photoUrl;
       img.alt = card.dataset.name || 'Foto';
       img.className = 'img-slot-photo';
+      img.onload = function() { modalSlot.classList.add('has-photo'); };
+      img.onerror = function() { img.remove(); };
       modalSlot.appendChild(img);
     }
 
