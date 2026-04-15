@@ -34,7 +34,7 @@
 }
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-body { background: var(--bg); color: var(--text); font-family: var(--sans); overflow-x: hidden; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
 a { text-decoration: none; color: inherit; }
 ::selection { background: rgba(184,151,106,0.35); color: #fff; }
 
@@ -127,7 +127,7 @@ a { text-decoration: none; color: inherit; }
    GRAIN OVERLAY
    ═══════════════════════════════════════════════════════ */
 body::before {
-  content: ''; position: fixed; inset: 0; z-index: 10000; pointer-events: none;
+  content: ''; position: fixed; inset: 0; z-index: 8999; pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
   opacity: 0.4;
 }
@@ -641,6 +641,14 @@ body::before {
   text-align: center;
 }
 .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(184,151,106,0.2); }
+@media (hover: none) {
+  .btn-gold:hover { transform: none; box-shadow: none; }
+  .btn-gold:active { background: var(--gold-light); }
+  .btn-primary:hover { color: var(--gold); }
+  .btn-primary:hover::before { transform: scaleX(0); }
+  .btn-primary:active { color: var(--bg); }
+  .btn-primary:active::before { transform: scaleX(1); }
+}
 
 /* ═══════════════════════════════════════════════════════
    CONTACT
@@ -742,6 +750,12 @@ body::before {
 /* ── TABLET (≤1024px) ─── */
 @media (max-width: 1024px) {
   .about-grid { grid-template-columns: 1fr; gap: 60px; }
+  .about-image-badge {
+    position: relative; top: auto; right: auto;
+    display: inline-flex; gap: 8px; align-items: baseline;
+    margin-top: 16px; padding: 14px 24px;
+  }
+  .about-image-accent { width: 100px; height: 100px; bottom: -16px; left: -16px; }
   .contact-grid { grid-template-columns: 1fr; gap: 48px; }
   .areas-grid { grid-template-columns: repeat(2, 1fr); }
   .team-grid { grid-template-columns: repeat(2, 1fr); }
@@ -773,7 +787,7 @@ body::before {
   .nav-logo-sub { font-size: 8px; letter-spacing: 4px; }
 
   /* Hero */
-  .hero { min-height: 100svh; min-height: 600px; }
+  .hero { min-height: 600px; min-height: 100svh; }
   .hero-content { padding: 0 16px 80px; }
   .hero-desc { font-size: 14px; max-width: 100%; }
   .hero-line { width: 48px; margin-bottom: 24px; }
@@ -823,6 +837,7 @@ body::before {
   .news-header { flex-direction: column; align-items: flex-start; gap: 12px;
     padding: 0 !important; margin-bottom: 32px !important; }
   .news-grid { grid-template-columns: 1fr; padding: 0 !important; gap: 24px; }
+  .news-card:first-child .news-card-img .img-slot { aspect-ratio: 16/10; }
   .news-card-body { padding: 20px 16px; }
   .news-title { font-size: 18px; }
   .news-excerpt { font-size: 13px; }
@@ -853,7 +868,7 @@ body::before {
   .footer-social { font-size: 10px; }
 
   /* Parallax divider */
-  .parallax-divider { height: 36vh; }
+  .parallax-divider { height: auto; min-height: 200px; padding: 48px 0; }
   .parallax-quote { font-size: 16px; padding: 0 16px; line-height: 1.6; }
 }
 
@@ -1347,6 +1362,125 @@ body::before {
   .pubs-overlay-header-inner { padding: 16px 20px; }
   .pubs-overlay-title { font-size: 20px; }
   .pubs-counter { font-size: 11px; }
+}
+/* ═══════════════════════════════════════════════════════
+   SKELETON LOADING (used by public-news.js)
+   ═══════════════════════════════════════════════════════ */
+.skeleton-pulse {
+  background: linear-gradient(110deg, rgba(255,255,255,0.04) 30%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 70%);
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.5s ease-in-out infinite;
+}
+.skeleton-line {
+  background: linear-gradient(110deg, rgba(255,255,255,0.06) 30%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.06) 70%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeletonShimmer 1.5s ease-in-out infinite;
+}
+@keyframes skeletonShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   ACCESSIBILITY — Focus visible
+   ═══════════════════════════════════════════════════════ */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+.btn-primary:focus-visible,
+.btn-gold:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 4px;
+}
+.nav-link:focus-visible,
+.footer-link:focus-visible {
+  outline: 1px solid var(--gold);
+  outline-offset: 6px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   TOUCH / ACTIVE STATES
+   ═══════════════════════════════════════════════════════ */
+@media (hover: none) and (pointer: coarse) {
+  .btn-primary:active { color: var(--bg); }
+  .btn-primary:active::before { transform: scaleX(1); }
+  .btn-gold:active { background: var(--gold-light); }
+  .area-card:active { background: rgba(184,151,106,0.04); }
+  .area-card:active::before { transform: scaleX(1); }
+  .area-card .area-arrow { opacity: 0.5; transform: translateX(0); }
+  .team-card .team-card-overlay { transform: translateY(0); opacity: 1; }
+  .news-card:active { border-color: rgba(184,151,106,0.25); }
+}
+
+/* ═══════════════════════════════════════════════════════
+   CONTACT IMAGES — ensure img-slots have height when empty
+   ═══════════════════════════════════════════════════════ */
+.contact-images > .img-slot { aspect-ratio: 16/10; }
+
+/* ═══════════════════════════════════════════════════════
+   TABLET PORTRAIT (≤768px)
+   ═══════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .nav-inner { padding: 0 24px; }
+  .section, .section-full { padding: 100px 24px; }
+  .about-stats { gap: 28px; }
+  .stat-number { font-size: 38px; }
+  .areas-grid { grid-template-columns: 1fr !important; }
+  .areas-header { padding: 0 24px !important; }
+  .area-card { padding: 40px 28px; }
+  .footer-inner { grid-template-columns: 1fr 1fr; gap: 36px; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  .team-socios { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
+  .team-associados { grid-template-columns: repeat(2, 1fr) !important; gap: 24px !important; }
+  .news-header { padding: 0 24px !important; margin-bottom: 48px !important; }
+  .news-grid { padding: 0 24px !important; }
+  .pubs-grid { grid-template-columns: repeat(2, 1fr); padding: 28px 24px 60px; }
+  .pubs-filters { padding: 24px 24px 0; }
+  .pubs-overlay-header-inner { padding: 20px 24px; }
+  .parallax-quote { font-size: clamp(17px, 2.5vw, 24px); padding: 0 24px; }
+  /* Nav — show hamburger on tablet portrait */
+  .nav-links { display: none; }
+  .nav-links.mobile-open {
+    display: flex; flex-direction: column;
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: rgba(8,8,16,0.97); backdrop-filter: blur(24px);
+    padding: 24px 24px 32px; gap: 20px;
+    border-bottom: 1px solid var(--gold-line);
+    animation: mobileNavIn 0.4s var(--ease-out);
+  }
+  .nav-hamburger { display: flex; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   MOBILE — additional fixes for ≤640px
+   ═══════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  /* Fix about badge overflow - was absolute with right:-20px on single column */
+  .about-image-badge {
+    position: relative; top: auto; right: auto;
+    display: inline-flex; gap: 8px; align-items: baseline;
+    margin-top: 16px; padding: 12px 20px;
+  }
+  /* Ensure map iframe is responsive */
+  .contact-grid iframe { height: 180px; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   SMOOTH TRANSITIONS — Reduce motion preference
+   ═══════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .marquee-track { animation: none; }
+  .hero-title-inner { transform: none; }
+  .reveal, .reveal-left, .reveal-right, .reveal-scale {
+    opacity: 1; transform: none;
+  }
 }
 </style>
 </head>
