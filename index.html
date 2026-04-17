@@ -409,7 +409,11 @@ body::before {
   z-index: -1;
   transform: scale(0); transform-origin: bottom left;
   transition: transform 1.2s var(--ease-out);
+  display: none;
 }
+/* Show accent only when a real photo is present */
+.about-image:has(.has-photo) .about-image-accent { display: block; }
+.about-image.has-real-photo .about-image-accent { display: block; }
 .about-image-accent.visible { transform: scale(1); }
 .about-image-badge {
   position: absolute; top: 32px; right: -20px;
@@ -441,12 +445,14 @@ body::before {
 .areas-grid {
   max-width: 1320px; margin: 0 auto;
   display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 1px; background: var(--gold-line);
+  gap: 0;
 }
 .area-card {
   background: var(--bg); padding: 52px 44px;
   cursor: pointer; position: relative; overflow: hidden;
   transition: background 0.6s var(--ease);
+  border: 1px solid var(--gold-line);
+  margin-top: -1px; margin-left: -1px;
 }
 .area-card::before {
   content: ''; position: absolute; bottom: 0; left: 0;
@@ -507,7 +513,9 @@ body::before {
 .team-card-img {
   position: relative; overflow: hidden; margin-bottom: 28px;
 }
-.team-card-img .img-slot { aspect-ratio: 3/4; transition: transform 0.8s var(--ease-out); }
+.team-card-img .img-slot { aspect-ratio: 2/3; transition: transform 0.8s var(--ease-out); }
+/* Sócios — fotos maiores que associados (4/5 > 1/2) */
+.team-socios .team-card-img .img-slot { aspect-ratio: 4/5; }
 .team-card:hover .team-card-img .img-slot { transform: scale(1.04); }
 .team-card-img::after {
   content: ''; position: absolute; bottom: 0; left: 0; right: 0;
@@ -1535,7 +1543,7 @@ body::before {
       Excelência jurídica há mais de 12 anos. Assessoria completa para empresas e pessoas físicas com a dedicação e a competência que o seu caso exige.
     </p>
     <div class="hero-cta">
-      <a class="btn-primary" href="https://wa.me/556634989617?text=Olá!%20Gostaria%20de%20agendar%20uma%20consulta." target="_blank" rel="noopener">Fale Conosco</a>
+      <a class="btn-primary" href="https://wa.me/556699862887?text=Olá!%20Gostaria%20de%20agendar%20uma%20consulta." target="_blank" rel="noopener">Fale Conosco</a>
     </div>
   </div>
   <div class="hero-scroll">
@@ -1547,23 +1555,17 @@ body::before {
 <!-- ═══════ MARQUEE ═══════ -->
 <div class="marquee">
   <div class="marquee-track">
-    <span class="marquee-item">Direito Empresarial</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Contencioso Cível</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Direito Tributário</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Direito Trabalhista</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Direito do Agronegócio</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Consultoria Empresarial</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Contencioso Civil e Contratos</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Direito do Trabalho</span><span class="marquee-dot"></span>
     <span class="marquee-item">Direito Imobiliário</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Direito Internacional</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Fusões & Aquisições</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Compliance</span><span class="marquee-dot"></span>
     <!-- duplicate for seamless loop -->
-    <span class="marquee-item">Direito Empresarial</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Contencioso Cível</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Direito Tributário</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Direito Trabalhista</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Direito do Agronegócio</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Consultoria Empresarial</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Contencioso Civil e Contratos</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Direito do Trabalho</span><span class="marquee-dot"></span>
     <span class="marquee-item">Direito Imobiliário</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Direito Internacional</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Fusões & Aquisições</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Compliance</span><span class="marquee-dot"></span>
   </div>
 </div>
 
@@ -1620,39 +1622,33 @@ body::before {
   </div>
   <div class="areas-grid">
     <div class="area-card reveal" style="transition-delay:0ms">
-      <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 21h18M3 7v1a3 3 0 006 0V7m0 0a3 3 0 016 0m0 0v1a3 3 0 006 0V7M6 21V10m6 11V10m6 11V10M3 7l9-4 9 4"/></svg></div>
-      <div class="area-name">Direito Empresarial</div>
-      <div class="area-desc">Consultoria estratégica para empresas, contratos, societário, governança corporativa e M&A.</div>
+      <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 12l10 5 10-5"/><path d="M7 21V10"/><path d="M17 21V10"/><circle cx="12" cy="17" r="2"/></svg></div>
+      <div class="area-name">Direito do Agronegócio</div>
+      <div class="area-desc">Consultoria especializada para o setor agropecuário, contratos rurais, regularização fundiária e questões ambientais do agronegócio.</div>
       <div class="area-arrow">→</div>
     </div>
     <div class="area-card reveal" style="transition-delay:80ms">
-      <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-      <div class="area-name">Contencioso Cível</div>
-      <div class="area-desc">Representação judicial e extrajudicial em litígios complexos, mediação e arbitragem.</div>
+      <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 21h18M3 7v1a3 3 0 006 0V7m0 0a3 3 0 016 0m0 0v1a3 3 0 006 0V7M6 21V10m6 11V10m6 11V10M3 7l9-4 9 4"/></svg></div>
+      <div class="area-name">Consultoria Empresarial</div>
+      <div class="area-desc">Assessoria jurídica estratégica para empresas, governança corporativa, societário, compliance e planejamento empresarial.</div>
       <div class="area-arrow">→</div>
     </div>
     <div class="area-card reveal" style="transition-delay:160ms">
-      <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2M12 12v4M8 12v4M16 12v4"/></svg></div>
-      <div class="area-name">Direito Tributário</div>
-      <div class="area-desc">Planejamento tributário, defesa em processos administrativos e judiciais fiscais.</div>
+      <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+      <div class="area-name">Contencioso Civil e Contratos</div>
+      <div class="area-desc">Representação judicial e extrajudicial em litígios complexos, elaboração e revisão de contratos, mediação e arbitragem.</div>
       <div class="area-arrow">→</div>
     </div>
     <div class="area-card reveal" style="transition-delay:240ms">
       <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
-      <div class="area-name">Direito Trabalhista</div>
-      <div class="area-desc">Assessoria preventiva e contenciosa nas relações de trabalho, compliance e reestruturações.</div>
+      <div class="area-name">Direito do Trabalho</div>
+      <div class="area-desc">Assessoria preventiva e contenciosa nas relações de trabalho, defesa patronal, negociações coletivas e compliance trabalhista.</div>
       <div class="area-arrow">→</div>
     </div>
     <div class="area-card reveal" style="transition-delay:320ms">
       <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
       <div class="area-name">Direito Imobiliário</div>
-      <div class="area-desc">Estruturação de operações imobiliárias, due diligence, regularização e financiamento.</div>
-      <div class="area-arrow">→</div>
-    </div>
-    <div class="area-card reveal" style="transition-delay:400ms">
-      <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
-      <div class="area-name">Direito Internacional</div>
-      <div class="area-desc">Assessoria em operações cross-border, investimentos estrangeiros e comércio exterior.</div>
+      <div class="area-desc">Estruturação de operações imobiliárias, due diligence, regularização fundiária, contratos de compra e venda e incorporação.</div>
       <div class="area-arrow">→</div>
     </div>
   </div>
@@ -1682,17 +1678,34 @@ body::before {
 
   <!-- Sócios Principais — 2 colunas grandes -->
   <div class="team-socios" style="display:grid; grid-template-columns:1fr 1fr; gap:48px; margin-bottom:64px;">
+
+    <!-- ═══════════════════════════════════════════════════
+         PERFIL 1 — SÓCIO: Dr. Bruno César Mamus
+         • data-name       → Nome exibido no card e no modal
+         • data-role       → Cargo (ex: "Sócio Fundador")
+         • data-oab        → Número da OAB
+         • data-photo-url  → URL da foto no bucket Supabase (publication-images/assets/)
+         • data-areas      → Áreas de atuação (separadas por vírgula)
+         • data-bio        → Texto da biografia no modal
+         • data-email      → Email de contato
+         ═══════════════════════════════════════════════════ -->
     <div class="team-card reveal" style="transition-delay:0ms"
       data-name="Dr. Bruno César Mamus"
       data-role="Sócio Fundador"
-      data-oab="OAB/XX 00.000"
+      data-oab="OAB/MT 00.000"
       data-photo="Foto — Dr. Bruno César Mamus"
       data-photo-url="https://pfkysmpmoxpzncdifawd.supabase.co/storage/v1/object/public/publication-images/assets/bruno-mamus.jpeg"
-      data-areas="Direito Empresarial,Contratos,Societário"
-      data-bio="Graduado em Direito com especialização em Direito Empresarial e ampla experiência em operações societárias complexas. Ao longo de sua carreira, assessorou empresas de diversos portes em questões envolvendo governança corporativa, fusões e aquisições, reestruturações societárias e planejamento estratégico. Reconhecido por sua atuação consultiva de excelência e pela capacidade de encontrar soluções jurídicas criativas e eficientes para os desafios de seus clientes."
+      data-areas="Consultoria Empresarial,Direito do Agronegócio,Contencioso Civil"
+      data-bio="Bruno C. F. Mamus, advogado graduado pela Faculdade de Ciências Jurídicas e Sociais Aplicadas de Primavera do Leste (UNICEN), 2011.
+
+Pós-graduando lato sensu em Direito do Agronegócio pela Universidade Federal de Mato Grosso (UFMT), 2026.
+
+Especialista lato sensu em Direito Individual, Coletivo e Processual do Trabalho pela Universidade de Várzea Grande (UNIVAG) em convênio acadêmico com a Escola Superior da Magistratura do Trabalho da 23ª Região (Amatra-23), 2018.
+
+Especialista lato sensu em Direito Tributário pela Universidade Anhanguera-Uniderp, 2015."
       data-email="bruno@mamusbomfim.com">
       <div class="team-card-img">
-        <div class="img-slot" style="aspect-ratio:3/4;">
+        <div class="img-slot">
           <svg class="img-slot-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
           <span class="img-slot-label">Foto — Dr. Bruno César Mamus</span>
         </div>
@@ -1702,20 +1715,25 @@ body::before {
       </div>
       <div class="team-name" style="font-size:24px; margin-top:4px;">Dr. Bruno César Mamus</div>
       <div class="team-role">Sócio Fundador</div>
-      <div class="team-area">Direito Empresarial e Societário</div>
-      <div class="team-oab">OAB/XX 00.000</div>
+      <div class="team-area">Consultoria Empresarial e Agronegócio</div>
+      <div class="team-oab">OAB/MT 00.000</div>
     </div>
+
+    <!-- ═══════════════════════════════════════════════════
+         PERFIL 2 — SÓCIO: Dr. André Luiz Bomfim
+         • data-photo-url  → PREENCHER com URL do bucket Supabase
+         ═══════════════════════════════════════════════════ -->
     <div class="team-card reveal" style="transition-delay:150ms"
       data-name="Dr. André Luiz Bomfim"
       data-role="Sócio Fundador"
-      data-oab="OAB/XX 00.000"
+      data-oab="OAB/MT 00.000"
       data-photo="Foto — Dr. André Luiz Bomfim"
-      data-photo-url=""
-      data-areas="Contencioso Cível,Arbitragem,Mediação"
+      data-photo-url="https://pfkysmpmoxpzncdifawd.supabase.co/storage/v1/object/public/publication-images/assets/andre-bomfim.jpeg"
+      data-areas="Contencioso Civil e Contratos,Direito Imobiliário,Direito do Trabalho"
       data-bio="Advogado com sólida formação acadêmica e vasta experiência em contencioso estratégico e resolução de disputas. Atua na representação judicial e extrajudicial de empresas e pessoas físicas em litígios de alta complexidade, incluindo arbitragem e mediação. Sua abordagem combina rigor técnico com visão estratégica, buscando sempre os melhores resultados para seus clientes com agilidade e segurança jurídica."
       data-email="andre@mamusbomfim.com">
       <div class="team-card-img">
-        <div class="img-slot" style="aspect-ratio:3/4;">
+        <div class="img-slot">
           <svg class="img-slot-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
           <span class="img-slot-label">Foto — Dr. André Luiz Bomfim</span>
         </div>
@@ -1725,81 +1743,102 @@ body::before {
       </div>
       <div class="team-name" style="font-size:24px; margin-top:4px;">Dr. André Luiz Bomfim</div>
       <div class="team-role">Sócio Fundador</div>
-      <div class="team-area">Contencioso Cível e Arbitragem</div>
-      <div class="team-oab">OAB/XX 00.000</div>
+      <div class="team-area">Contencioso Civil e Direito Imobiliário</div>
+      <div class="team-oab">OAB/MT 00.000</div>
     </div>
   </div>
 
   <!-- Associados — 3 colunas menores -->
   <div class="team-associados" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:32px;">
+
+    <!-- ═══════════════════════════════════════════════════
+         PERFIL 3 — ASSOCIADA: Dra. Alexia Gomes
+         • data-photo-url  → alexia-gomes.jpeg
+         ═══════════════════════════════════════════════════ -->
     <div class="team-card reveal" style="transition-delay:0ms"
-      data-name="Dr(a). Nome Sobrenome"
-      data-role="Associado(a)"
-      data-oab="OAB/XX 00.000"
-      data-photo="Foto — Associado(a) 1"
-      data-photo-url=""
-      data-areas="Direito Tributário,Planejamento Fiscal"
-      data-bio="Profissional com experiência em direito tributário, atuando tanto na esfera consultiva quanto na contenciosa. Assessora empresas em planejamento tributário, defesa em processos administrativos e judiciais fiscais, além de acompanhar as constantes mudanças na legislação tributária brasileira."
+      data-name="Dra. Alexia Gomes"
+      data-role="Associada"
+      data-oab="OAB/MT 00.000"
+      data-photo="Foto — Alexia Gomes"
+      data-photo-url="https://pfkysmpmoxpzncdifawd.supabase.co/storage/v1/object/public/publication-images/assets/alexia-gomes.jpeg"
+      data-areas="Direito do Agronegócio,Consultoria Empresarial"
+      data-bio="Alexia Gomes, advogada graduada em Ciências Jurídicas e Sociais Aplicadas pela UNIC - Cuiabá, 2018.
+
+Pós-graduada em Direito Penal e Processo Penal pela Escola Superior do Ministério Público, 2021.
+
+Pós-graduada em Direito Civil pela Pontifícia Universidade Católica de Minas Gerais, (Lato Sensu) 2024.
+
+Pós-graduada em Direito Processual Civil pela Escola Damásio, 2025."
       data-email="contato@mamusbomfim.com">
       <div class="team-card-img">
-        <div class="img-slot" style="aspect-ratio:3/4;">
+        <div class="img-slot">
           <svg class="img-slot-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span class="img-slot-label">Foto — Associado(a) 1</span>
+          <span class="img-slot-label">Foto — Alexia Gomes</span>
         </div>
         <div class="team-card-overlay">
           <div class="team-card-overlay-text">Ver Perfil →</div>
         </div>
       </div>
-      <div class="team-name">Dr(a). Nome Sobrenome</div>
-      <div class="team-role">Associado(a)</div>
-      <div class="team-area">Direito Tributário</div>
-      <div class="team-oab">OAB/XX 00.000</div>
+      <div class="team-name">Dra. Alexia Gomes</div>
+      <div class="team-role">Associada</div>
+      <div class="team-area">Direito do Agronegócio</div>
+      <div class="team-oab">OAB/MT 00.000</div>
     </div>
+
+    <!-- ═══════════════════════════════════════════════════
+         PERFIL 4 — ASSOCIADA: Dra. Ataynara Rodrigues Marcelino Bomfim
+         • data-photo-url  → ataynara-bomfim.jpeg
+         ═══════════════════════════════════════════════════ -->
     <div class="team-card reveal" style="transition-delay:120ms"
-      data-name="Dr(a). Nome Sobrenome"
-      data-role="Associado(a)"
-      data-oab="OAB/XX 00.000"
-      data-photo="Foto — Associado(a) 2"
-      data-photo-url=""
-      data-areas="Direito Trabalhista,Compliance"
-      data-bio="Atua na área trabalhista com foco em assessoria preventiva e contenciosa. Experiência em reestruturações, negociações coletivas, compliance trabalhista e representação em processos judiciais e administrativos. Busca sempre a solução mais eficiente para preservar os interesses de seus clientes."
+      data-name="Dra. Ataynara Rodrigues Marcelino Bomfim"
+      data-role="Associada"
+      data-oab="OAB/MT 00.000"
+      data-photo="Foto — Ataynara Bomfim"
+      data-photo-url="https://pfkysmpmoxpzncdifawd.supabase.co/storage/v1/object/public/publication-images/assets/ataynara-bomfim.jpeg"
+      data-areas="Direito do Trabalho,Contencioso Civil"
+      data-bio="Atua na área trabalhista com foco em assessoria preventiva e contenciosa. Experiência em defesa patronal, negociações coletivas, compliance trabalhista e representação em processos judiciais e administrativos."
       data-email="contato@mamusbomfim.com">
       <div class="team-card-img">
-        <div class="img-slot" style="aspect-ratio:3/4;">
+        <div class="img-slot">
           <svg class="img-slot-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span class="img-slot-label">Foto — Associado(a) 2</span>
+          <span class="img-slot-label">Foto — Ataynara Bomfim</span>
         </div>
         <div class="team-card-overlay">
           <div class="team-card-overlay-text">Ver Perfil →</div>
         </div>
       </div>
-      <div class="team-name">Dr(a). Nome Sobrenome</div>
-      <div class="team-role">Associado(a)</div>
-      <div class="team-area">Direito Trabalhista</div>
-      <div class="team-oab">OAB/XX 00.000</div>
+      <div class="team-name">Dra. Ataynara Rodrigues Marcelino Bomfim</div>
+      <div class="team-role">Associada</div>
+      <div class="team-area">Direito do Trabalho</div>
+      <div class="team-oab">OAB/MT 00.000</div>
     </div>
+
+    <!-- ═══════════════════════════════════════════════════
+         PERFIL 5 — ASSOCIADO: Dr. Hallison Fernando Nunes Carvalho
+         • data-photo-url  → halisson-fernando.jpeg
+         ═══════════════════════════════════════════════════ -->
     <div class="team-card reveal" style="transition-delay:240ms"
-      data-name="Dr(a). Nome Sobrenome"
-      data-role="Associado(a)"
-      data-oab="OAB/XX 00.000"
-      data-photo="Foto — Associado(a) 3"
-      data-photo-url=""
-      data-areas="Direito Imobiliário,Contratos"
+      data-name="Dr. Hallison Fernando Nunes Carvalho"
+      data-role="Associado"
+      data-oab="OAB/MT 00.000"
+      data-photo="Foto — Hallison Carvalho"
+      data-photo-url="https://pfkysmpmoxpzncdifawd.supabase.co/storage/v1/object/public/publication-images/assets/halisson-fernando.jpeg"
+      data-areas="Direito Imobiliário,Contencioso Civil e Contratos"
       data-bio="Especialista em operações imobiliárias, com experiência em estruturação de negócios, due diligence, regularização fundiária e contratos de compra e venda, locação e incorporação. Presta assessoria completa a incorporadoras, construtoras e investidores do setor."
       data-email="contato@mamusbomfim.com">
       <div class="team-card-img">
-        <div class="img-slot" style="aspect-ratio:3/4;">
+        <div class="img-slot">
           <svg class="img-slot-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span class="img-slot-label">Foto — Associado(a) 3</span>
+          <span class="img-slot-label">Foto — Hallison Carvalho</span>
         </div>
         <div class="team-card-overlay">
           <div class="team-card-overlay-text">Ver Perfil →</div>
         </div>
       </div>
-      <div class="team-name">Dr(a). Nome Sobrenome</div>
-      <div class="team-role">Associado(a)</div>
+      <div class="team-name">Dr. Hallison Fernando Nunes Carvalho</div>
+      <div class="team-role">Associado</div>
       <div class="team-area">Direito Imobiliário</div>
-      <div class="team-oab">OAB/XX 00.000</div>
+      <div class="team-oab">OAB/MT 00.000</div>
     </div>
   </div>
 </section>
@@ -1884,7 +1923,7 @@ body::before {
     <h2 class="reveal">Conte com a nossa experiência para <em>proteger o que é seu.</em></h2>
     <p class="reveal" style="transition-delay:150ms">Agende uma consulta com nossos especialistas e descubra como podemos ajudar no seu caso.</p>
     <div class="reveal" style="transition-delay:300ms">
-      <a class="btn-gold" href="https://wa.me/556634989617?text=Olá!%20Gostaria%20de%20agendar%20uma%20consulta." target="_blank" rel="noopener">Agendar Consulta</a>
+      <a class="btn-gold" href="https://wa.me/556699862887?text=Olá!%20Gostaria%20de%20agendar%20uma%20consulta." target="_blank" rel="noopener">Agendar Consulta</a>
     </div>
   </div>
 </section>
@@ -1904,7 +1943,7 @@ body::before {
           Primavera II — Primavera do Leste/MT<br>
           CEP: 78850-000<br><br>
           <strong>Tel:</strong> (66) 3498-9617
-          <a href="https://wa.me/556634989617?text=Olá!%20Gostaria%20de%20agendar%20uma%20consulta." target="_blank" rel="noopener" class="wpp-link" title="Abrir no WhatsApp">
+          <a href="https://wa.me/556699862887?text=Olá!%20Gostaria%20de%20agendar%20uma%20consulta." target="_blank" rel="noopener" class="wpp-link" title="Abrir no WhatsApp">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           </a>
           <br>
@@ -1986,14 +2025,15 @@ body::before {
     </div>
     <div>
       <div class="footer-col-title">Áreas</div>
+      <a class="footer-link" href="#areas">Agronegócio</a>
       <a class="footer-link" href="#areas">Empresarial</a>
-      <a class="footer-link" href="#areas">Cível</a>
-      <a class="footer-link" href="#areas">Tributário</a>
+      <a class="footer-link" href="#areas">Cível e Contratos</a>
       <a class="footer-link" href="#areas">Trabalhista</a>
+      <a class="footer-link" href="#areas">Imobiliário</a>
     </div>
     <div>
       <div class="footer-col-title">Contato Rápido</div>
-      <a class="footer-link" href="https://wa.me/556634989617?text=Olá!%20Gostaria%20de%20agendar%20uma%20consulta." target="_blank" rel="noopener" style="color:#25d366;">WhatsApp</a>
+      <a class="footer-link" href="https://wa.me/556699862887?text=Olá!%20Gostaria%20de%20agendar%20uma%20consulta." target="_blank" rel="noopener" style="color:#25d366;">WhatsApp</a>
       <a class="footer-link" href="mailto:contato@mamusbomfim.com">Email</a>
       <a class="footer-link" href="tel:+556634989617">Telefone</a>
     </div>
@@ -2001,7 +2041,7 @@ body::before {
   <div class="footer-bottom">
     <span class="footer-copy">© 2026 Mamus Bomfim Advogados Associados. Todos os direitos reservados.</span>
     <div class="footer-socials">
-      <a class="footer-social" href="https://wa.me/556634989617" target="_blank" rel="noopener">WhatsApp</a>
+      <a class="footer-social" href="https://wa.me/556699862887" target="_blank" rel="noopener">WhatsApp</a>
       <a class="footer-social" href="https://www.instagram.com/mamusbomfimadvogados/" target="_blank" rel="noopener">Instagram</a>
     </div>
   </div>
@@ -2151,6 +2191,7 @@ body::before {
     // When image loads, add class to hide placeholder (fallback for :has())
     img.onload = function() {
       slot.classList.add('has-photo');
+      el.classList.add('has-real-photo');
     };
     // If image fails, don't break layout
     img.onerror = function() {
