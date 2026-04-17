@@ -1440,8 +1440,11 @@ body::before {
   .area-card { padding: 40px 28px; }
   .footer-inner { grid-template-columns: 1fr 1fr; gap: 36px; }
   .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
-  .team-socios { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
-  .team-associados { grid-template-columns: repeat(2, 1fr) !important; gap: 24px !important; }
+  .team-socios { grid-template-columns: 1fr !important; gap: 32px !important; }
+  .team-associados { grid-template-columns: 1fr !important; gap: 24px !important; }
+  /* Mobile: todas as fotos do mesmo tamanho */
+  .team-card-img .img-slot,
+  .team-socios .team-card-img .img-slot { aspect-ratio: 3/4 !important; }
   .news-header { padding: 0 24px !important; margin-bottom: 48px !important; }
   .news-grid { padding: 0 24px !important; }
   .pubs-grid { grid-template-columns: repeat(2, 1fr); padding: 28px 24px 60px; }
