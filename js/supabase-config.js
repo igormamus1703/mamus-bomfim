@@ -36,6 +36,12 @@ function formatDate(dateStr) {
 /**
  * Formata data para input datetime-local
  */
+function formatDateTime(dateStr) {
+  const d = new Date(dateStr);
+  const pad = (n) => String(n).padStart(2, '0');
+  return formatDate(dateStr) + ' · ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+}
+
 function formatDateInput(dateStr) {
   const d = new Date(dateStr);
   return d.toISOString().slice(0, 16);

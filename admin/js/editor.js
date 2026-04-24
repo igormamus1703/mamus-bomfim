@@ -90,7 +90,9 @@ async function loadPublication(id) {
     document.getElementById('image_url').value    = data.image_url || '';
 
     if (data.published_at) {
-      document.getElementById('published_at').value = formatDateInput(data.published_at);
+      const parts = splitDateTimeForInputs(data.published_at);
+      document.getElementById('published_date').value = parts.date;
+      document.getElementById('published_time').value = parts.time;
     }
 
     isPublished = data.published || false;
@@ -127,6 +129,11 @@ async function handleSave(e) {
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span> Salvando...';
 
+  // Combina data + hora em ISO. Se vazio, usa agora.
+  const dateVal = document.getElementById('published_date').value;
+  const timeVal = document.getElementById('published_time').value;
+  const publishedAtIso = combineDateTimeToIso(dateVal, timeVal);
+
   const payload = {
     title,
     slug,
@@ -135,9 +142,7 @@ async function handleSave(e) {
     content:      document.getElementById('content').value.trim(),
     image_url:    document.getElementById('image_url').value.trim() || null,
     published:    isPublished,
-    published_at: document.getElementById('published_at').value
-                    ? new Date(document.getElementById('published_at').value).toISOString()
-                    : new Date().toISOString(),
+    published_at: publishedAtIso,
   };
 
   console.log('[Editor] Saving —', editingId ? 'UPDATE' : 'INSERT', payload);
@@ -203,6 +208,19 @@ async function handleImageUpload() {
       return;
     }
 
+    // Validação de proporção ANTES de fazer upload
+    const validation = await validateImageRatio(file);
+    if (validation.status === 'blocked') {
+      toast(validation.message, 'error');
+      return;
+    }
+    if (validation.status === 'warning') {
+      const proceed = confirm(
+        validation.message + '\n\nDeseja enviar mesmo assim? A imagem pode aparecer cortada ou com tamanho diferente das demais.'
+      );
+      if (!proceed) return;
+    }
+
     const uploadBtn = document.getElementById('upload-btn');
     uploadBtn.disabled = true;
     uploadBtn.innerHTML = '<span class="spinner"></span>';
@@ -230,6 +248,7 @@ async function handleImageUpload() {
       const url = urlData.publicUrl;
       document.getElementById('image_url').value = url;
       showImagePreview(url);
+      showImageWarning(validation); // mostra aviso inline se houver
       toast('Imagem enviada!', 'success');
       console.log('[Editor] Upload OK:', url);
 
@@ -243,6 +262,91 @@ async function handleImageUpload() {
   };
 
   input.click();
+}
+
+// ── Validação de proporção da imagem ───────────────────────
+// Proporção ideal: 16/10 (1.6). Aceitável: 16/9 (~1.78) a 4/3 (~1.33).
+function validateImageRatio(fileOrUrl) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      const w = img.naturalWidth;
+      const h = img.naturalHeight;
+      const ratio = w / h;
+
+      // Alvo e limites
+      const TARGET = 16 / 10;        // 1.60
+      const MAX_RATIO = 16 / 9;      // 1.78  (mais largo que isso → avisa)
+      const MIN_RATIO = 4 / 3;       // 1.33  (mais alto que isso → avisa)
+      const HARD_MIN = 1;            // 1:1 → quadrado — a partir daqui bloqueia
+      const HARD_MAX = 2.5;          // super panorâmico → bloqueia
+
+      const info = w + '×' + h + 'px (proporção ' + ratio.toFixed(2) + ':1)';
+
+      // Resolução mínima
+      if (w < 800 || h < 500) {
+        resolve({
+          status: 'blocked',
+          ratio, w, h,
+          message: 'Imagem muito pequena: ' + info + '. Envie uma imagem com pelo menos 800×500px.',
+        });
+        return;
+      }
+
+      // Proporção extrema — bloquear
+      if (ratio < HARD_MIN || ratio > HARD_MAX) {
+        resolve({
+          status: 'blocked',
+          ratio, w, h,
+          message: 'Proporção incompatível: ' + info + '. Use uma imagem entre 4:3 e 16:9 (ideal: 16:10, ex: 1600×1000px).',
+        });
+        return;
+      }
+
+      // Fora do ideal mas aceitável — avisar
+      if (ratio > MAX_RATIO || ratio < MIN_RATIO) {
+        resolve({
+          status: 'warning',
+          ratio, w, h,
+          message: 'Atenção: a imagem é ' + info + ', fora da proporção recomendada (16:10). Pode aparecer cortada ou em tamanho diferente das demais publicações.',
+        });
+        return;
+      }
+
+      // Tudo ok
+      resolve({
+        status: 'ok',
+        ratio, w, h,
+        message: 'Imagem válida (' + info + ').',
+      });
+    };
+    img.onerror = () => {
+      resolve({
+        status: 'blocked',
+        message: 'Não foi possível ler a imagem. Verifique o arquivo ou a URL.',
+      });
+    };
+
+    if (fileOrUrl instanceof File) {
+      img.src = URL.createObjectURL(fileOrUrl);
+    } else {
+      img.crossOrigin = 'anonymous';
+      img.src = fileOrUrl;
+    }
+  });
+}
+
+// ── Exibe aviso inline sobre a imagem ──────────────────────
+function showImageWarning(validation) {
+  const warn = document.getElementById('image-warning');
+  if (!warn) return;
+  if (validation.status === 'warning') {
+    warn.textContent = '⚠ ' + validation.message;
+    warn.style.display = 'block';
+  } else {
+    warn.style.display = 'none';
+    warn.textContent = '';
+  }
 }
 
 // ── Toggle publicado/rascunho ──────────────────────────────
@@ -274,9 +378,28 @@ function setupSlugGeneration() {
 
 // ── Preview de imagem ──────────────────────────────────────
 function setupImagePreview() {
+  let urlValidationTimer;
   document.getElementById('image_url').addEventListener('input', (e) => {
     const url = e.target.value.trim();
-    url ? showImagePreview(url) : hideImagePreview();
+    if (!url) {
+      hideImagePreview();
+      showImageWarning({ status: 'ok' });
+      return;
+    }
+    showImagePreview(url);
+    // Debounce — só valida 600ms após parar de digitar
+    clearTimeout(urlValidationTimer);
+    urlValidationTimer = setTimeout(async () => {
+      const validation = await validateImageRatio(url);
+      if (validation.status === 'blocked') {
+        showImageWarning({
+          status: 'warning',
+          message: validation.message,
+        });
+      } else {
+        showImageWarning(validation);
+      }
+    }, 600);
   });
 }
 
@@ -304,6 +427,28 @@ function toast(msg, type) {
     el.classList.add('hide');
     setTimeout(function() { el.remove(); }, 300);
   }, 3500);
+}
+
+// ── Helpers de data/hora (formato BR, 24h) ─────────────────
+// Divide um ISO em { date: 'YYYY-MM-DD', time: 'HH:MM' } no timezone local
+function splitDateTimeForInputs(isoStr) {
+  const d = new Date(isoStr);
+  const pad = (n) => String(n).padStart(2, '0');
+  return {
+    date: d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()),
+    time: pad(d.getHours()) + ':' + pad(d.getMinutes()),
+  };
+}
+
+// Combina os dois inputs em um ISO. Se date vazio, usa agora.
+// Se date presente e time vazio, usa 12:00 como padrão.
+function combineDateTimeToIso(dateStr, timeStr) {
+  if (!dateStr) return new Date().toISOString();
+  const time = timeStr || '12:00';
+  // Constrói no timezone local e converte para ISO (UTC)
+  const local = new Date(dateStr + 'T' + time + ':00');
+  if (isNaN(local.getTime())) return new Date().toISOString();
+  return local.toISOString();
 }
 
 // ── Inicializa ─────────────────────────────────────────────

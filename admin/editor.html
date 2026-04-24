@@ -63,8 +63,12 @@
       <!-- Data + Imagem -->
       <div class="editor-row">
         <div class="form-group">
-          <label class="form-label" for="published_at">Data de Publicação</label>
-          <input class="form-input" type="datetime-local" id="published_at">
+          <label class="form-label" for="published_date">Data de Publicação</label>
+          <div style="display:flex; gap:8px;">
+            <input class="form-input" type="date" id="published_date" style="flex:1.4" lang="pt-BR">
+            <input class="form-input" type="time" id="published_time" style="flex:1" lang="pt-BR" step="60">
+          </div>
+          <small style="display:block; margin-top:6px; color:rgba(255,255,255,0.35); font-size:11px; letter-spacing:0.5px;">Formato 24h — se vazio, usa data/hora atual</small>
         </div>
         <div class="form-group">
           <label class="form-label" for="image_url">Imagem (URL ou upload)</label>
@@ -74,8 +78,12 @@
               Upload
             </button>
           </div>
+          <small style="display:block; margin-top:6px; color:rgba(255,255,255,0.35); font-size:11px; letter-spacing:0.5px;">Proporção recomendada: <strong style="color:var(--gold);">16:10</strong> (ex: 1600×1000px). Tolerância: 16:9 a 4:3.</small>
         </div>
       </div>
+
+      <!-- Image validation warning -->
+      <div id="image-warning" style="display:none; margin-bottom:16px; padding:14px 18px; background:rgba(255,170,60,0.08); border:1px solid rgba(255,170,60,0.3); border-radius:6px; color:#ffb84d; font-size:13px; line-height:1.5;"></div>
 
       <!-- Image Preview -->
       <div id="image-preview" style="display:none; margin-bottom:20px;"></div>

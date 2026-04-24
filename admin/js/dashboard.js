@@ -53,7 +53,7 @@ function renderTable(pubs) {
     <tr data-id="${pub.id}">
       <td class="td-title">${pub.title}</td>
       <td><span class="td-tag" data-tag="${pub.tag}">${pub.tag}</span></td>
-      <td>${formatDate(pub.published_at)}</td>
+      <td>${formatDateTime(pub.published_at)}</td>
       <td>
         <span class="td-status">
           <span class="td-status-dot ${pub.published ? 'published' : 'draft'}"></span>
