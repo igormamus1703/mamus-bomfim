@@ -90,9 +90,17 @@ async function loadPublication(id) {
     document.getElementById('image_url').value    = data.image_url || '';
 
     if (data.published_at) {
-      const parts = splitDateTimeForInputs(data.published_at);
-      document.getElementById('published_date').value = parts.date;
-      document.getElementById('published_time').value = parts.time;
+      const dateEl = document.getElementById('published_date');
+      const timeEl = document.getElementById('published_time');
+      const legacyEl = document.getElementById('published_at');
+      if (dateEl && timeEl) {
+        const parts = splitDateTimeForInputs(data.published_at);
+        dateEl.value = parts.date;
+        timeEl.value = parts.time;
+      } else if (legacyEl) {
+        // HTML antigo ainda em uso
+        legacyEl.value = formatDateInput(data.published_at);
+      }
     }
 
     isPublished = data.published || false;
@@ -130,9 +138,21 @@ async function handleSave(e) {
   btn.innerHTML = '<span class="spinner"></span> Salvando...';
 
   // Combina data + hora em ISO. Se vazio, usa agora.
-  const dateVal = document.getElementById('published_date').value;
-  const timeVal = document.getElementById('published_time').value;
-  const publishedAtIso = combineDateTimeToIso(dateVal, timeVal);
+  // Usa optional chaining para não crashar se os campos não existirem (HTML desatualizado)
+  const dateEl = document.getElementById('published_date');
+  const timeEl = document.getElementById('published_time');
+  const legacyEl = document.getElementById('published_at'); // compat com HTML antigo
+
+  let publishedAtIso;
+  if (dateEl) {
+    publishedAtIso = combineDateTimeToIso(dateEl.value, timeEl ? timeEl.value : '');
+  } else if (legacyEl) {
+    publishedAtIso = legacyEl.value
+      ? new Date(legacyEl.value).toISOString()
+      : new Date().toISOString();
+  } else {
+    publishedAtIso = new Date().toISOString();
+  }
 
   const payload = {
     title,
@@ -177,7 +197,21 @@ async function handleSave(e) {
       throw result.error;
     }
 
-    toast(editingId ? 'Publicação atualizada!' : 'Publicação criada!', 'success');
+    // Mensagem inteligente: agendado/publicado/rascunho
+    let successMsg;
+    if (!isPublished) {
+      successMsg = editingId ? 'Rascunho atualizado!' : 'Rascunho salvo!';
+    } else {
+      const isFuture = new Date(publishedAtIso) > new Date();
+      if (isFuture) {
+        const d = new Date(publishedAtIso);
+        const dateStr = d.toLocaleDateString('pt-BR') + ' às ' + d.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+        successMsg = '📅 Agendado para ' + dateStr;
+      } else {
+        successMsg = editingId ? 'Publicação atualizada!' : 'Publicação criada!';
+      }
+    }
+    toast(successMsg, 'success');
 
     setTimeout(() => {
       window.location.href = '/admin/dashboard.html';

@@ -7,7 +7,7 @@
 <meta name="description" content="Mamus Bomfim Advogados Associados — Escritório de advocacia em Primavera do Leste/MT. Atuação em Direito Empresarial, Cível, Trabalhista, Tributário, Imobiliário e mais.">
 <meta name="theme-color" content="#080810">
 <meta property="og:title" content="Mamus Bomfim — Advogados Associados">
-<meta property="og:description" content="Excelência jurídica há mais de 12 anos. Assessoria completa para empresas e pessoas físicas.">
+<meta property="og:description" content="Excelência jurídica há mais de 14 anos. Assessoria completa para empresas e pessoas físicas.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -420,6 +420,7 @@ body::before {
   background: var(--gold); color: var(--bg);
   padding: 20px 24px; text-align: center;
   font-family: var(--serif);
+  z-index: 5;
   opacity: 0; transform: translateX(20px);
   transition: all 0.8s 0.6s var(--ease-out);
 }
@@ -587,11 +588,31 @@ body::before {
 }
 .news-card:hover { border-color: rgba(184,151,106,0.25); }
 .news-card:hover .news-card-img .img-slot { transform: scale(1.06); }
-.news-card-img { overflow: hidden; }
+.news-card-img { overflow: hidden; position: relative; }
 .news-card-img .img-slot {
   aspect-ratio: 16/10; transition: transform 1s var(--ease-out);
 }
 .news-card:first-child .news-card-img .img-slot { aspect-ratio: 16/9; }
+
+/* Featured badge — "Mais Recente" no primeiro card */
+.news-featured-badge {
+  position: absolute; top: 16px; left: 16px; z-index: 10;
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 7px 14px;
+  background: var(--gold); color: var(--bg);
+  font-family: var(--sans); font-size: 10px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+}
+.news-featured-badge::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--bg);
+  animation: featuredPulse 2s ease-in-out infinite;
+}
+@keyframes featuredPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
 .news-card-body { padding: 32px 28px; }
 .news-card-meta {
   display: flex; justify-content: space-between; align-items: center;
@@ -750,6 +771,110 @@ body::before {
   transition: color 0.3s;
 }
 .footer-social:hover { color: var(--gold); }
+
+/* ═══════════════════════════════════════════════════════
+   VALORES — Seção Missão, Visão, Valores
+   ═══════════════════════════════════════════════════════ */
+.valores-section {
+  background:
+    radial-gradient(ellipse at 80% 30%, rgba(184,151,106,0.04) 0%, transparent 55%),
+    linear-gradient(180deg, var(--bg-subtle) 0%, var(--bg) 100%);
+}
+.valores-intro {
+  max-width: 880px; margin: 0 auto 80px;
+  text-align: center;
+}
+.valores-intro-label {
+  font-family: var(--sans); font-size: 11px; font-weight: 500;
+  letter-spacing: 5px; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 18px;
+}
+.valores-intro-title {
+  font-family: var(--serif); font-size: clamp(28px, 4vw, 52px);
+  font-weight: 300; line-height: 1.18; margin-bottom: 28px;
+}
+.valores-intro-title em { font-style: normal; font-weight: 600; color: var(--gold); }
+.valores-intro-text {
+  font-family: var(--sans); font-size: 15.5px; font-weight: 300;
+  color: var(--text-muted); line-height: 1.85;
+  max-width: 760px; margin: 0 auto;
+}
+.valores-pillars {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  max-width: 1200px; margin: 0 auto 100px;
+  border-top: 1px solid var(--gold-line);
+  border-bottom: 1px solid var(--gold-line);
+}
+.valores-pillar {
+  padding: 56px 44px;
+  position: relative;
+  border-right: 1px solid var(--gold-line);
+}
+.valores-pillar:last-child { border-right: none; }
+.valores-pillar-num {
+  font-family: var(--serif); font-size: 14px; font-weight: 400;
+  color: var(--gold); letter-spacing: 4px;
+  margin-bottom: 18px; opacity: 0.7;
+}
+.valores-pillar-title {
+  font-family: var(--serif); font-size: 26px; font-weight: 600;
+  color: var(--text); margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+.valores-pillar-text {
+  font-family: var(--sans); font-size: 14.5px; font-weight: 300;
+  color: var(--text-muted); line-height: 1.85;
+}
+.valores-creed {
+  max-width: 980px; margin: 0 auto;
+}
+.valores-creed-title {
+  font-family: var(--sans); font-size: 11px; font-weight: 500;
+  letter-spacing: 5px; text-transform: uppercase; color: var(--gold);
+  text-align: center; margin-bottom: 48px;
+  display: flex; align-items: center; justify-content: center; gap: 18px;
+}
+.valores-creed-title::before,
+.valores-creed-title::after {
+  content: ''; flex: 0 0 48px; height: 1px; background: var(--gold-line);
+}
+.valores-creed-list {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px 60px;
+}
+.valores-creed-item {
+  position: relative; padding-left: 32px;
+}
+.valores-creed-item::before {
+  content: ''; position: absolute; left: 0; top: 14px;
+  width: 18px; height: 1px; background: var(--gold);
+}
+.valores-creed-item p {
+  font-family: var(--sans); font-size: 14.5px; font-weight: 300;
+  color: var(--text-muted); line-height: 1.8;
+}
+
+/* Responsive — Valores */
+@media (max-width: 1024px) {
+  .valores-pillars { grid-template-columns: 1fr; max-width: 700px; }
+  .valores-pillar {
+    border-right: none; border-bottom: 1px solid var(--gold-line);
+    padding: 44px 32px;
+  }
+  .valores-pillar:last-child { border-bottom: none; }
+  .valores-creed-list { grid-template-columns: 1fr; gap: 32px; }
+}
+@media (max-width: 640px) {
+  .valores-intro { margin-bottom: 56px; }
+  .valores-intro-text { font-size: 14px; }
+  .valores-pillars { margin-bottom: 64px; }
+  .valores-pillar { padding: 36px 24px; }
+  .valores-pillar-title { font-size: 22px; }
+  .valores-pillar-text { font-size: 13.5px; }
+  .valores-creed-title::before,
+  .valores-creed-title::after { flex: 0 0 24px; }
+  .valores-creed-item p { font-size: 13.5px; }
+}
 
 /* ═══════════════════════════════════════════════════════
    RESPONSIVE
@@ -1031,6 +1156,12 @@ body::before {
   color: var(--text-muted); line-height: 1.8;
   opacity: 0; transform: translateY(20px);
   transition: all 0.6s 0.5s var(--ease-out);
+}
+.profile-modal-bio p {
+  margin-bottom: 14px;
+}
+.profile-modal-bio p:last-child {
+  margin-bottom: 0;
 }
 .profile-modal.open .profile-modal-bio {
   opacity: 1; transform: translateY(0);
@@ -1514,6 +1645,7 @@ body::before {
       <a class="nav-link" href="#about">O Escritório</a>
       <a class="nav-link" href="#areas">Áreas de Atuação</a>
       <a class="nav-link" href="#team">Equipe</a>
+      <a class="nav-link" href="#valores">Valores</a>
       <a class="nav-link" href="#news">Publicações</a>
       <a class="nav-link" href="#contact">Contato</a>
     </div>
@@ -1543,7 +1675,7 @@ body::before {
       </span>
     </h1>
     <p class="hero-desc">
-      Excelência jurídica há mais de 12 anos. Assessoria completa para empresas e pessoas físicas com a dedicação e a competência que o seu caso exige.
+      Excelência jurídica há mais de 14 anos. Assessoria completa para empresas e pessoas físicas com a dedicação e a competência que o seu caso exige.
     </p>
     <div class="hero-cta">
       <a class="btn-primary" href="https://wa.me/556699862887?text=Olá!%20Gostaria%20de%20agendar%20uma%20consulta." target="_blank" rel="noopener">Fale Conosco</a>
@@ -1563,12 +1695,14 @@ body::before {
     <span class="marquee-item">Contencioso Civil e Contratos</span><span class="marquee-dot"></span>
     <span class="marquee-item">Direito do Trabalho</span><span class="marquee-dot"></span>
     <span class="marquee-item">Direito Imobiliário</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Compliance Ambiental</span><span class="marquee-dot"></span>
     <!-- duplicate for seamless loop -->
     <span class="marquee-item">Direito do Agronegócio</span><span class="marquee-dot"></span>
     <span class="marquee-item">Consultoria Empresarial</span><span class="marquee-dot"></span>
     <span class="marquee-item">Contencioso Civil e Contratos</span><span class="marquee-dot"></span>
     <span class="marquee-item">Direito do Trabalho</span><span class="marquee-dot"></span>
     <span class="marquee-item">Direito Imobiliário</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Compliance Ambiental</span><span class="marquee-dot"></span>
   </div>
 </div>
 
@@ -1588,27 +1722,23 @@ body::before {
       </p>
       <div class="about-stats reveal" style="transition-delay:480ms">
         <div>
-          <div class="stat-number"><span class="counter" data-target="12">0</span><span class="suffix">+</span></div>
+          <div class="stat-number"><span class="counter" data-target="14">0</span><span class="suffix">+</span></div>
           <div class="stat-label">Anos de Experiência</div>
         </div>
         <div>
           <div class="stat-number"><span class="counter" data-target="500">0</span><span class="suffix">+</span></div>
-          <div class="stat-label">Clientes Atendidos</div>
-        </div>
-        <div>
-          <div class="stat-number"><span class="counter" data-target="98">0</span><span class="suffix">%</span></div>
-          <div class="stat-label">Taxa de Sucesso</div>
+          <div class="stat-label">Casos Resolvidos</div>
         </div>
       </div>
     </div>
-    <div class="about-image reveal-right" data-photo-url="">
+    <div class="about-image reveal-right" data-photo-url="https://pfkysmpmoxpzncdifawd.supabase.co/storage/v1/object/public/publication-images/assets/interior-escritorio.jpeg">
       <div class="img-slot">
         <svg class="img-slot-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
         <span class="img-slot-label">Foto do escritório — ambiente interno ou sala de reunião</span>
       </div>
       <div class="about-image-accent reveal-scale"></div>
       <div class="about-image-badge reveal-scale">
-        <div class="badge-num">12+</div>
+        <div class="badge-num">14+</div>
         <div class="badge-text">Anos</div>
       </div>
     </div>
@@ -1652,6 +1782,12 @@ body::before {
       <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
       <div class="area-name">Direito Imobiliário</div>
       <div class="area-desc">Estruturação de operações imobiliárias, due diligence, regularização fundiária, contratos de compra e venda e incorporação.</div>
+      <div class="area-arrow">→</div>
+    </div>
+    <div class="area-card reveal" style="transition-delay:400ms">
+      <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+      <div class="area-name">Compliance e Due Diligence Ambiental</div>
+      <div class="area-desc">Consultoria e Due Diligence para transações rurais, identificando e mitigando riscos regulatórios e passivos ambientais para garantir conformidade no setor agrícola.</div>
       <div class="area-arrow">→</div>
     </div>
   </div>
@@ -1846,6 +1982,68 @@ Pós-graduada em Direito Processual Civil pela Escola Damásio, 2025."
   </div>
 </section>
 
+<!-- ═══════ VALORES ═══════ -->
+<section class="section-full valores-section" id="valores">
+  <div class="section" style="padding: 0; max-width: 1320px; margin: 0 auto;">
+
+    <!-- Intro -->
+    <div class="valores-intro">
+      <div class="valores-intro-label reveal">Quem somos nós</div>
+      <h2 class="valores-intro-title reveal" style="transition-delay:120ms">
+        Mamus Bomfim<br><em>Advogados Associados</em>
+      </h2>
+      <p class="valores-intro-text reveal" style="transition-delay:240ms">
+        Escritório de alta performance jurídica fundado em 2012, com mais de uma década de experiência consolidada em Primavera do Leste, Mato Grosso, e atuação nacional. Posicionamo-nos como especialistas em análise de risco jurídico, com foco estratégico nas áreas de agronegócio e consultoria empresarial, complementadas por expertise em contencioso civil, direito do trabalho e direito imobiliário.
+      </p>
+    </div>
+
+    <!-- Pilares: Missão / Visão / Valores -->
+    <div class="valores-pillars">
+      <div class="valores-pillar reveal" style="transition-delay:0ms">
+        <div class="valores-pillar-num">01 — MISSÃO</div>
+        <h3 class="valores-pillar-title">Proteger e potencializar</h3>
+        <p class="valores-pillar-text">
+          Proteger patrimônios e potencializar negócios através de análise jurídica estratégica, transformando riscos em oportunidades de crescimento. Oferecemos assessoria de excelência técnica, pautada pela ética e transparência, para empresas e pessoas físicas que exigem segurança jurídica e resultados mensuráveis.
+        </p>
+      </div>
+      <div class="valores-pillar reveal" style="transition-delay:140ms">
+        <div class="valores-pillar-num">02 — VISÃO</div>
+        <h3 class="valores-pillar-title">Referência nacional</h3>
+        <p class="valores-pillar-text">
+          Consolidar-nos como o escritório de referência em análise de risco jurídico e consultoria estratégica no agronegócio e setor empresarial, reconhecido nacionalmente pela excelência técnica, inovação nas soluções jurídicas e pela capacidade de transformar complexidade legal em segurança e crescimento para nossos clientes.
+        </p>
+      </div>
+      <div class="valores-pillar reveal" style="transition-delay:280ms">
+        <div class="valores-pillar-num">03 — VALORES</div>
+        <h3 class="valores-pillar-title">Estratégia e técnica</h3>
+        <p class="valores-pillar-text">
+          Transformamos anos de expertise jurídica em proteção estratégica para o seu patrimônio e os seus negócios. Através de análise de risco permanente, estruturamos defesas sólidas, antecipamos problemas e garantimos que você tome decisões com segurança jurídica e respaldo técnico irretocável.
+        </p>
+      </div>
+    </div>
+
+    <!-- Credo / Manifesto -->
+    <div class="valores-creed">
+      <div class="valores-creed-title reveal">No que acreditamos</div>
+      <div class="valores-creed-list">
+        <div class="valores-creed-item reveal" style="transition-delay:0ms">
+          <p><strong style="color:var(--text); font-weight:500;">Especialistas no agronegócio.</strong> Dominamos a complexidade tributária, ambiental e contratual do setor. Estruturamos operações que crescem com segurança jurídica, antecipamos mudanças regulatórias e defendemos os seus direitos com combatividade quando necessário.</p>
+        </div>
+        <div class="valores-creed-item reveal" style="transition-delay:120ms">
+          <p><strong style="color:var(--text); font-weight:500;">Consultoria estratégica.</strong> Direito como ferramenta de crescimento — não como custo. Governança corporativa, compliance, estruturação de operações complexas e defesa em litígios. Você tem um parceiro que compreende os seus objetivos.</p>
+        </div>
+        <div class="valores-creed-item reveal" style="transition-delay:240ms">
+          <p><strong style="color:var(--text); font-weight:500;">Proteção patrimonial integrada.</strong> Estruturamos a sua segurança jurídica em múltiplas dimensões: imobiliária, sucessória, tributária e contratual. Você tem um conselheiro que antecipa riscos e protege o que você construiu.</p>
+        </div>
+        <div class="valores-creed-item reveal" style="transition-delay:360ms">
+          <p><strong style="color:var(--text); font-weight:500;">Análise de risco permanente.</strong> Não esperamos o problema chegar. Acompanhamos a evolução normativa, o cenário fiscal e o seu negócio para que cada decisão seja tomada com a melhor informação técnica disponível.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- ═══════ PROFILE MODAL ═══════ -->
 <div class="profile-modal-backdrop" id="profileBackdrop"></div>
 <button class="profile-modal-close" id="profileClose" aria-label="Fechar">
@@ -1971,16 +2169,6 @@ Pós-graduada em Direito Processual Civil pela Escola Damásio, 2025."
       <div class="img-slot">
         <svg class="img-slot-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
         <span class="img-slot-label">Fachada do escritório</span>
-      </div>
-      <div class="contact-images-row">
-        <div class="img-slot">
-          <svg class="img-slot-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span class="img-slot-label">Interior 1</span>
-        </div>
-        <div class="img-slot">
-          <svg class="img-slot-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span class="img-slot-label">Interior 2</span>
-        </div>
       </div>
     </div>
   </div>
@@ -2210,7 +2398,13 @@ Pós-graduada em Direito Processual Civil pela Escola Damásio, 2025."
     document.getElementById('profileName').textContent  = card.dataset.name;
     document.getElementById('profileRole').textContent   = card.dataset.role;
     document.getElementById('profileOab').textContent    = card.dataset.oab;
-    document.getElementById('profileBio').textContent    = card.dataset.bio;
+    // Bio: converte quebras de linha em parágrafos para preservar formatação
+    var bioEl = document.getElementById('profileBio');
+    var rawBio = card.dataset.bio || '';
+    var bioParagraphs = rawBio.split(/\n\n|\n/).filter(function(p) { return p.trim(); });
+    bioEl.innerHTML = bioParagraphs.map(function(p) {
+      return '<p>' + p.trim().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</p>';
+    }).join('');
     document.getElementById('profilePhotoLabel').textContent = card.dataset.photo;
 
     // Real photo in modal (if provided)
@@ -2369,10 +2563,14 @@ Pós-graduada em Direito Processual Civil pela Escola Damásio, 2025."
       pubsGrid.innerHTML = '<div class="pubs-loading"><span class="spinner" style="width:24px;height:24px;"></span></div>';
 
       try {
+        // Filtro inteligente: igual ao do feed principal
+        // Posts agendados (data futura) ficam ocultos até a hora chegar
+        var nowIso = new Date().toISOString();
         var result = await db
           .from('publications')
           .select('id, title, slug, tag, excerpt, content, image_url, published_at')
           .eq('published', true)
+          .lte('published_at', nowIso)
           .order('published_at', { ascending: false });
 
         if (result.error) throw result.error;

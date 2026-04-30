@@ -49,15 +49,36 @@ function renderTable(pubs) {
     return;
   }
 
-  tbody.innerHTML = pubs.map(pub => `
+  tbody.innerHTML = pubs.map(pub => {
+    // Lógica de status:
+    // - Rascunho: published=false
+    // - Agendado: published=true mas published_at futuro
+    // - Publicado: published=true e published_at <= agora
+    const now = new Date();
+    const publishedAt = new Date(pub.published_at);
+    const isScheduled = pub.published && publishedAt > now;
+
+    let statusClass, statusLabel;
+    if (!pub.published) {
+      statusClass = 'draft';
+      statusLabel = 'Rascunho';
+    } else if (isScheduled) {
+      statusClass = 'scheduled';
+      statusLabel = 'Agendado';
+    } else {
+      statusClass = 'published';
+      statusLabel = 'Publicado';
+    }
+
+    return `
     <tr data-id="${pub.id}">
       <td class="td-title">${pub.title}</td>
       <td><span class="td-tag" data-tag="${pub.tag}">${pub.tag}</span></td>
       <td>${formatDateTime(pub.published_at)}</td>
       <td>
         <span class="td-status">
-          <span class="td-status-dot ${pub.published ? 'published' : 'draft'}"></span>
-          ${pub.published ? 'Publicado' : 'Rascunho'}
+          <span class="td-status-dot ${statusClass}"></span>
+          ${statusLabel}
         </span>
       </td>
       <td>
@@ -67,14 +88,23 @@ function renderTable(pubs) {
         </div>
       </td>
     </tr>
-  `).join('');
+  `;
+  }).join('');
 }
 
 // ── Atualizar estatísticas ─────────────────────────────────
 function updateStats(pubs) {
-  document.getElementById('stat-total').textContent    = pubs.length;
-  document.getElementById('stat-published').textContent = pubs.filter(p => p.published).length;
-  document.getElementById('stat-draft').textContent     = pubs.filter(p => !p.published).length;
+  const now = new Date();
+  const published = pubs.filter(p => p.published && new Date(p.published_at) <= now);
+  const scheduled = pubs.filter(p => p.published && new Date(p.published_at) > now);
+  const drafts    = pubs.filter(p => !p.published);
+
+  document.getElementById('stat-total').textContent     = pubs.length;
+  document.getElementById('stat-published').textContent = published.length;
+  document.getElementById('stat-draft').textContent     = drafts.length;
+  // Atualiza scheduled se o elemento existir (HTML opcional)
+  const scheduledEl = document.getElementById('stat-scheduled');
+  if (scheduledEl) scheduledEl.textContent = scheduled.length;
 }
 
 // ── Busca ──────────────────────────────────────────────────

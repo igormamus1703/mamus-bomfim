@@ -37,11 +37,14 @@ window._publicationsData = [];
   }).join('');
 
   try {
-    // Busca tudo incluindo content para o modal
+    // Filtro inteligente: published=true E data já passou
+    // (Posts agendados com data futura ficam ocultos até a hora chegar — sem cron necessário)
+    var nowIso = new Date().toISOString();
     var result = await db
       .from('publications')
       .select('id, title, slug, tag, excerpt, content, image_url, published_at')
       .eq('published', true)
+      .lte('published_at', nowIso)
       .order('published_at', { ascending: false })
       .limit(3);
 
@@ -68,8 +71,12 @@ window._publicationsData = [];
             '<svg class="img-slot-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>' +
             '<span class="img-slot-label">Imagem — ' + pub.tag + '</span></div>';
 
+      var featuredBadge = (i === 0)
+        ? '<span class="news-featured-badge">Mais Recente</span>'
+        : '';
+
       return '<article class="news-card reveal" style="transition-delay:' + (i * 150) + 'ms" data-pub-id="' + pub.id + '">' +
-        '<div class="news-card-img">' + imgHtml + '</div>' +
+        '<div class="news-card-img">' + featuredBadge + imgHtml + '</div>' +
         '<div class="news-card-body">' +
           '<div class="news-card-meta">' +
             '<span class="news-tag">' + pub.tag + '</span>' +

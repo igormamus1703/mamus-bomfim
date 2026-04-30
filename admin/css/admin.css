@@ -245,6 +245,7 @@ tbody tr:last-child td { border-bottom: none; }
   width: 7px; height: 7px; border-radius: 50%;
 }
 .td-status-dot.published { background: var(--green); }
+.td-status-dot.scheduled { background: #ffb84d; box-shadow: 0 0 0 2px rgba(255,184,77,0.15); }
 .td-status-dot.draft { background: rgba(255,255,255,0.2); }
 .td-actions { display: flex; gap: 8px; }
 .td-actions button {
