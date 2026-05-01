@@ -92,13 +92,16 @@ async function loadPublication(id) {
     if (data.published_at) {
       const dateEl = document.getElementById('published_date');
       const timeEl = document.getElementById('published_time');
+      const dateBrEl = document.getElementById('published_date_br');
+      const timeBrEl = document.getElementById('published_time_br');
       const legacyEl = document.getElementById('published_at');
       if (dateEl && timeEl) {
         const parts = splitDateTimeForInputs(data.published_at);
-        dateEl.value = parts.date;
-        timeEl.value = parts.time;
+        dateEl.value = parts.date;     // ISO (yyyy-mm-dd)
+        timeEl.value = parts.time;     // HH:MM
+        if (dateBrEl) dateBrEl.value = isoDateToBr(parts.date);  // dd/mm/yyyy
+        if (timeBrEl) timeBrEl.value = parts.time;
       } else if (legacyEl) {
-        // HTML antigo ainda em uso
         legacyEl.value = formatDateInput(data.published_at);
       }
     }
@@ -138,14 +141,39 @@ async function handleSave(e) {
   btn.innerHTML = '<span class="spinner"></span> Salvando...';
 
   // Combina data + hora em ISO. Se vazio, usa agora.
-  // Usa optional chaining para não crashar se os campos não existirem (HTML desatualizado)
-  const dateEl = document.getElementById('published_date');
-  const timeEl = document.getElementById('published_time');
-  const legacyEl = document.getElementById('published_at'); // compat com HTML antigo
+  const dateBrEl = document.getElementById('published_date_br');
+  const timeBrEl = document.getElementById('published_time_br');
+  const legacyEl = document.getElementById('published_at');
 
   let publishedAtIso;
-  if (dateEl) {
-    publishedAtIso = combineDateTimeToIso(dateEl.value, timeEl ? timeEl.value : '');
+  if (dateBrEl) {
+    // Lê dos inputs visíveis em BR e converte
+    const dateBr = (dateBrEl.value || '').trim();
+    const timeBr = (timeBrEl ? timeBrEl.value : '').trim();
+
+    if (!dateBr) {
+      publishedAtIso = new Date().toISOString();
+    } else {
+      const isoDate = brDateToIso(dateBr);
+      if (!isoDate) {
+        toast('Data inválida. Use o formato dd/mm/aaaa.', 'error');
+        btn.disabled = false;
+        btn.textContent = editingId ? 'Salvar Alterações' : 'Salvar Publicação';
+        return;
+      }
+      // Valida hora se preenchida
+      let timeFinal = '12:00';
+      if (timeBr) {
+        if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(timeBr)) {
+          toast('Hora inválida. Use o formato 24h (ex: 16:00).', 'error');
+          btn.disabled = false;
+          btn.textContent = editingId ? 'Salvar Alterações' : 'Salvar Publicação';
+          return;
+        }
+        timeFinal = timeBr;
+      }
+      publishedAtIso = combineDateTimeToIso(isoDate, timeFinal);
+    }
   } else if (legacyEl) {
     publishedAtIso = legacyEl.value
       ? new Date(legacyEl.value).toISOString()
@@ -485,5 +513,92 @@ function combineDateTimeToIso(dateStr, timeStr) {
   return local.toISOString();
 }
 
+// ── Conversões BR ↔ ISO ──────────────────────────────────
+// "2026-04-15" → "15/04/2026"
+function isoDateToBr(isoDate) {
+  if (!isoDate) return '';
+  const parts = isoDate.split('-');
+  if (parts.length !== 3) return '';
+  return parts[2] + '/' + parts[1] + '/' + parts[0];
+}
+
+// "15/04/2026" → "2026-04-15" (ou null se inválida)
+function brDateToIso(brDate) {
+  if (!brDate) return null;
+  const m = brDate.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if (!m) return null;
+  const day = parseInt(m[1], 10);
+  const month = parseInt(m[2], 10);
+  const year = parseInt(m[3], 10);
+  if (month < 1 || month > 12) return null;
+  if (day < 1 || day > 31) return null;
+  if (year < 1900 || year > 2100) return null;
+  // Valida data real (não 31/02 etc)
+  const test = new Date(year, month - 1, day);
+  if (test.getFullYear() !== year || test.getMonth() !== month - 1 || test.getDate() !== day) {
+    return null;
+  }
+  return m[3] + '-' + m[2] + '-' + m[1];
+}
+
+// ── Máscaras de input (formato BR + 24h) ─────────────────
+function setupDateMasks() {
+  const dateBr = document.getElementById('published_date_br');
+  const timeBr = document.getElementById('published_time_br');
+  if (!dateBr || !timeBr) return;
+
+  // Máscara de data: dd/mm/aaaa
+  dateBr.addEventListener('input', function(e) {
+    let v = e.target.value.replace(/\D/g, '').slice(0, 8);
+    let formatted = '';
+    if (v.length > 0) formatted = v.slice(0, 2);
+    if (v.length >= 3) formatted += '/' + v.slice(2, 4);
+    if (v.length >= 5) formatted += '/' + v.slice(4, 8);
+    e.target.value = formatted;
+  });
+
+  // Máscara de hora: HH:MM (24h, máx 23:59)
+  timeBr.addEventListener('input', function(e) {
+    let v = e.target.value.replace(/\D/g, '').slice(0, 4);
+    // Auto-corrige: se primeiro dígito > 2, prepend "0"
+    if (v.length === 1 && parseInt(v, 10) > 2) v = '0' + v;
+    // Auto-corrige: se HH > 23, limita
+    if (v.length >= 2) {
+      const hh = parseInt(v.slice(0, 2), 10);
+      if (hh > 23) v = '23' + v.slice(2);
+    }
+    // Auto-corrige: se MM > 59, limita
+    if (v.length >= 4) {
+      const mm = parseInt(v.slice(2, 4), 10);
+      if (mm > 59) v = v.slice(0, 2) + '59';
+    }
+    let formatted = '';
+    if (v.length > 0) formatted = v.slice(0, 2);
+    if (v.length >= 3) formatted += ':' + v.slice(2, 4);
+    e.target.value = formatted;
+  });
+
+  // Validação ao sair do campo (visual feedback)
+  dateBr.addEventListener('blur', function(e) {
+    const val = e.target.value.trim();
+    if (val && !brDateToIso(val)) {
+      e.target.style.borderColor = '#e05555';
+    } else {
+      e.target.style.borderColor = '';
+    }
+  });
+  timeBr.addEventListener('blur', function(e) {
+    const val = e.target.value.trim();
+    if (val && !/^([01]\d|2[0-3]):[0-5]\d$/.test(val)) {
+      e.target.style.borderColor = '#e05555';
+    } else {
+      e.target.style.borderColor = '';
+    }
+  });
+}
+
 // ── Inicializa ─────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', initEditor);
+document.addEventListener('DOMContentLoaded', function() {
+  initEditor();
+  setupDateMasks();
+});

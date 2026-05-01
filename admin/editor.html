@@ -63,12 +63,20 @@
       <!-- Data + Imagem -->
       <div class="editor-row">
         <div class="form-group">
-          <label class="form-label" for="published_date">Data de Publicação</label>
+          <label class="form-label" for="published_date_br">Data de Publicação</label>
           <div style="display:flex; gap:8px;">
-            <input class="form-input" type="date" id="published_date" style="flex:1.4" lang="pt-BR">
-            <input class="form-input" type="time" id="published_time" style="flex:1" lang="pt-BR" step="60">
+            <!-- Hidden ISO inputs — fonte de verdade para o save -->
+            <input type="hidden" id="published_date">
+            <input type="hidden" id="published_time">
+            <!-- Inputs visíveis em formato BR com máscara -->
+            <input class="form-input" type="text" id="published_date_br"
+              placeholder="dd/mm/aaaa" maxlength="10" inputmode="numeric"
+              autocomplete="off" style="flex:1.4">
+            <input class="form-input" type="text" id="published_time_br"
+              placeholder="HH:MM" maxlength="5" inputmode="numeric"
+              autocomplete="off" style="flex:1">
           </div>
-          <small style="display:block; margin-top:6px; color:rgba(255,255,255,0.35); font-size:11px; letter-spacing:0.5px;">Formato 24h. Datas futuras agendam a publicação. Datas passadas publicam imediatamente.</small>
+          <small style="display:block; margin-top:6px; color:rgba(255,255,255,0.35); font-size:11px; letter-spacing:0.5px;">Formato 24h (ex: 16:00 para 4 da tarde). Datas futuras agendam a publicação. Datas passadas publicam imediatamente.</small>
         </div>
         <div class="form-group">
           <label class="form-label" for="image_url">Imagem (URL ou upload)</label>
