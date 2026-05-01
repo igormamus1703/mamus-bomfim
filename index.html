@@ -517,6 +517,22 @@ body::before {
 .team-card-img .img-slot { aspect-ratio: 2/3; transition: transform 0.8s var(--ease-out); }
 /* Sócios — fotos maiores que associados (4/5 > 1/2) */
 .team-socios .team-card-img .img-slot { aspect-ratio: 4/5; }
+
+/* Containers de equipe — limita largura para fotos não ficarem gigantes em telas grandes */
+.team-socios {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  margin: 0 auto 72px;
+  max-width: 880px;
+}
+.team-associados {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin: 0 auto;
+  max-width: 820px;
+}
 .team-card:hover .team-card-img .img-slot { transform: scale(1.04); }
 .team-card-img::after {
   content: ''; position: absolute; bottom: 0; left: 0; right: 0;
@@ -1643,9 +1659,9 @@ body::before {
     </a>
     <div class="nav-links" id="navLinks">
       <a class="nav-link" href="#about">O Escritório</a>
+      <a class="nav-link" href="#valores">Valores</a>
       <a class="nav-link" href="#areas">Áreas de Atuação</a>
       <a class="nav-link" href="#team">Equipe</a>
-      <a class="nav-link" href="#valores">Valores</a>
       <a class="nav-link" href="#news">Publicações</a>
       <a class="nav-link" href="#contact">Contato</a>
     </div>
@@ -1692,15 +1708,15 @@ body::before {
   <div class="marquee-track">
     <span class="marquee-item">Direito do Agronegócio</span><span class="marquee-dot"></span>
     <span class="marquee-item">Consultoria Empresarial</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Contencioso Civil e Contratos</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Direito do Trabalho</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Cível e Contratos</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Recuperação de Crédito</span><span class="marquee-dot"></span>
     <span class="marquee-item">Direito Imobiliário</span><span class="marquee-dot"></span>
     <span class="marquee-item">Compliance Ambiental</span><span class="marquee-dot"></span>
     <!-- duplicate for seamless loop -->
     <span class="marquee-item">Direito do Agronegócio</span><span class="marquee-dot"></span>
     <span class="marquee-item">Consultoria Empresarial</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Contencioso Civil e Contratos</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Direito do Trabalho</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Cível e Contratos</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Recuperação de Crédito</span><span class="marquee-dot"></span>
     <span class="marquee-item">Direito Imobiliário</span><span class="marquee-dot"></span>
     <span class="marquee-item">Compliance Ambiental</span><span class="marquee-dot"></span>
   </div>
@@ -1731,7 +1747,7 @@ body::before {
         </div>
       </div>
     </div>
-    <div class="about-image reveal-right" data-photo-url="https://pfkysmpmoxpzncdifawd.supabase.co/storage/v1/object/public/publication-images/assets/interior-escritorio.jpeg">
+    <div class="about-image reveal-right" data-photo-url="https://pfkysmpmoxpzncdifawd.supabase.co/storage/v1/object/public/publication-images/assets/foto-interior-escritorio.jpeg">
       <div class="img-slot">
         <svg class="img-slot-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
         <span class="img-slot-label">Foto do escritório — ambiente interno ou sala de reunião</span>
@@ -1741,243 +1757,6 @@ body::before {
         <div class="badge-num">14+</div>
         <div class="badge-text">Anos</div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════ AREAS ═══════ -->
-<section class="section-full areas-section" id="areas">
-  <div class="areas-header" style="padding: 0 48px;">
-    <div class="section-label reveal" style="justify-content:center">Expertise</div>
-    <h2 class="section-title reveal" style="text-align:center; transition-delay:120ms">
-      Áreas de <em>Atuação</em>
-    </h2>
-  </div>
-  <div class="areas-grid">
-    <div class="area-card reveal" style="transition-delay:0ms">
-      <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 12l10 5 10-5"/><path d="M7 21V10"/><path d="M17 21V10"/><circle cx="12" cy="17" r="2"/></svg></div>
-      <div class="area-name">Direito do Agronegócio</div>
-      <div class="area-desc">Consultoria especializada para o setor agropecuário, contratos rurais, regularização fundiária e questões ambientais do agronegócio.</div>
-      <div class="area-arrow">→</div>
-    </div>
-    <div class="area-card reveal" style="transition-delay:80ms">
-      <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 21h18M3 7v1a3 3 0 006 0V7m0 0a3 3 0 016 0m0 0v1a3 3 0 006 0V7M6 21V10m6 11V10m6 11V10M3 7l9-4 9 4"/></svg></div>
-      <div class="area-name">Consultoria Empresarial</div>
-      <div class="area-desc">Assessoria jurídica estratégica para empresas, governança corporativa, societário, compliance e planejamento empresarial.</div>
-      <div class="area-arrow">→</div>
-    </div>
-    <div class="area-card reveal" style="transition-delay:160ms">
-      <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-      <div class="area-name">Contencioso Civil e Contratos</div>
-      <div class="area-desc">Representação judicial e extrajudicial em litígios complexos, elaboração e revisão de contratos, mediação e arbitragem.</div>
-      <div class="area-arrow">→</div>
-    </div>
-    <div class="area-card reveal" style="transition-delay:240ms">
-      <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
-      <div class="area-name">Direito do Trabalho</div>
-      <div class="area-desc">Assessoria preventiva e contenciosa nas relações de trabalho, defesa patronal, negociações coletivas e compliance trabalhista.</div>
-      <div class="area-arrow">→</div>
-    </div>
-    <div class="area-card reveal" style="transition-delay:320ms">
-      <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-      <div class="area-name">Direito Imobiliário</div>
-      <div class="area-desc">Estruturação de operações imobiliárias, due diligence, regularização fundiária, contratos de compra e venda e incorporação.</div>
-      <div class="area-arrow">→</div>
-    </div>
-    <div class="area-card reveal" style="transition-delay:400ms">
-      <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
-      <div class="area-name">Compliance e Due Diligence Ambiental</div>
-      <div class="area-desc">Consultoria e Due Diligence para transações rurais, identificando e mitigando riscos regulatórios e passivos ambientais para garantir conformidade no setor agrícola.</div>
-      <div class="area-arrow">→</div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════ PARALLAX DIVIDER ═══════ -->
-<div class="parallax-divider" id="parallaxDiv">
-  <div class="img-slot" id="parallaxBg" style="position:absolute;inset:0;width:100%;height:130%;">
-    <svg class="img-slot-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-    <span class="img-slot-label">Foto panorâmica — cidade, detalhe arquitetônico ou biblioteca jurídica</span>
-  </div>
-  <div class="parallax-divider-overlay">
-    <blockquote class="parallax-quote reveal">
-      "A justiça é a <em>constante e perpétua vontade</em> de dar a cada um o que lhe é devido."
-    </blockquote>
-  </div>
-</div>
-
-<!-- ═══════ TEAM ═══════ -->
-<section class="section" id="team">
-  <div class="team-header">
-    <div class="section-label reveal" style="justify-content:center">Profissionais</div>
-    <h2 class="section-title reveal" style="text-align:center; transition-delay:120ms">
-      Nossa <em>Equipe</em>
-    </h2>
-  </div>
-
-  <!-- Sócios Principais — 2 colunas grandes -->
-  <div class="team-socios" style="display:grid; grid-template-columns:1fr 1fr; gap:48px; margin-bottom:64px;">
-
-    <!-- ═══════════════════════════════════════════════════
-         PERFIL 1 — SÓCIO: Dr. Bruno César Mamus
-         • data-name       → Nome exibido no card e no modal
-         • data-role       → Cargo (ex: "Sócio Fundador")
-         • data-oab        → Número da OAB
-         • data-photo-url  → URL da foto no bucket Supabase (publication-images/assets/)
-         • data-areas      → Áreas de atuação (separadas por vírgula)
-         • data-bio        → Texto da biografia no modal
-         • data-email      → Email de contato
-         ═══════════════════════════════════════════════════ -->
-    <div class="team-card reveal" style="transition-delay:0ms"
-      data-name="Dr. Bruno César Mamus"
-      data-role="Sócio Fundador"
-      data-oab="OAB/MT 00.000"
-      data-photo="Foto — Dr. Bruno César Mamus"
-      data-photo-url="https://pfkysmpmoxpzncdifawd.supabase.co/storage/v1/object/public/publication-images/assets/bruno-mamus.jpeg"
-      data-areas="Consultoria Empresarial,Direito do Agronegócio,Contencioso Civil"
-      data-bio="Bruno C. F. Mamus, advogado graduado pela Faculdade de Ciências Jurídicas e Sociais Aplicadas de Primavera do Leste (UNICEN), 2011.
-
-Pós-graduando lato sensu em Direito do Agronegócio pela Universidade Federal de Mato Grosso (UFMT), 2026.
-
-Especialista lato sensu em Direito Individual, Coletivo e Processual do Trabalho pela Universidade de Várzea Grande (UNIVAG) em convênio acadêmico com a Escola Superior da Magistratura do Trabalho da 23ª Região (Amatra-23), 2018.
-
-Especialista lato sensu em Direito Tributário pela Universidade Anhanguera-Uniderp, 2015."
-      data-email="bruno@mamusbomfim.com">
-      <div class="team-card-img">
-        <div class="img-slot">
-          <svg class="img-slot-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span class="img-slot-label">Foto — Dr. Bruno César Mamus</span>
-        </div>
-        <div class="team-card-overlay">
-          <div class="team-card-overlay-text">Ver Perfil →</div>
-        </div>
-      </div>
-      <div class="team-name" style="font-size:24px; margin-top:4px;">Dr. Bruno César Mamus</div>
-      <div class="team-role">Sócio Fundador</div>
-      <div class="team-area">Consultoria Empresarial e Agronegócio</div>
-      <div class="team-oab">OAB/MT 00.000</div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════════════
-         PERFIL 2 — SÓCIO: Dr. André Luiz Bomfim
-         • data-photo-url  → PREENCHER com URL do bucket Supabase
-         ═══════════════════════════════════════════════════ -->
-    <div class="team-card reveal" style="transition-delay:150ms"
-      data-name="Dr. André Luiz Bomfim"
-      data-role="Sócio Fundador"
-      data-oab="OAB/MT 00.000"
-      data-photo="Foto — Dr. André Luiz Bomfim"
-      data-photo-url="https://pfkysmpmoxpzncdifawd.supabase.co/storage/v1/object/public/publication-images/assets/andre-bomfim.jpeg"
-      data-areas="Contencioso Civil e Contratos,Direito Imobiliário,Direito do Trabalho"
-      data-bio="Advogado com sólida formação acadêmica e vasta experiência em contencioso estratégico e resolução de disputas. Atua na representação judicial e extrajudicial de empresas e pessoas físicas em litígios de alta complexidade, incluindo arbitragem e mediação. Sua abordagem combina rigor técnico com visão estratégica, buscando sempre os melhores resultados para seus clientes com agilidade e segurança jurídica."
-      data-email="andre@mamusbomfim.com">
-      <div class="team-card-img">
-        <div class="img-slot">
-          <svg class="img-slot-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span class="img-slot-label">Foto — Dr. André Luiz Bomfim</span>
-        </div>
-        <div class="team-card-overlay">
-          <div class="team-card-overlay-text">Ver Perfil →</div>
-        </div>
-      </div>
-      <div class="team-name" style="font-size:24px; margin-top:4px;">Dr. André Luiz Bomfim</div>
-      <div class="team-role">Sócio Fundador</div>
-      <div class="team-area">Contencioso Civil e Direito Imobiliário</div>
-      <div class="team-oab">OAB/MT 00.000</div>
-    </div>
-  </div>
-
-  <!-- Associados — 3 colunas menores -->
-  <div class="team-associados" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:32px;">
-
-    <!-- ═══════════════════════════════════════════════════
-         PERFIL 3 — ASSOCIADA: Dra. Alexia Gomes
-         • data-photo-url  → alexia-gomes.jpeg
-         ═══════════════════════════════════════════════════ -->
-    <div class="team-card reveal" style="transition-delay:0ms"
-      data-name="Dra. Alexia Gomes"
-      data-role="Associada"
-      data-oab="OAB/MT 00.000"
-      data-photo="Foto — Alexia Gomes"
-      data-photo-url="https://pfkysmpmoxpzncdifawd.supabase.co/storage/v1/object/public/publication-images/assets/alexia-gomes.jpeg"
-      data-areas="Direito do Agronegócio,Consultoria Empresarial"
-      data-bio="Alexia Gomes, advogada graduada em Ciências Jurídicas e Sociais Aplicadas pela UNIC - Cuiabá, 2018.
-
-Pós-graduada em Direito Penal e Processo Penal pela Escola Superior do Ministério Público, 2021.
-
-Pós-graduada em Direito Civil pela Pontifícia Universidade Católica de Minas Gerais, (Lato Sensu) 2024.
-
-Pós-graduada em Direito Processual Civil pela Escola Damásio, 2025."
-      data-email="contato@mamusbomfim.com">
-      <div class="team-card-img">
-        <div class="img-slot">
-          <svg class="img-slot-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span class="img-slot-label">Foto — Alexia Gomes</span>
-        </div>
-        <div class="team-card-overlay">
-          <div class="team-card-overlay-text">Ver Perfil →</div>
-        </div>
-      </div>
-      <div class="team-name">Dra. Alexia Gomes</div>
-      <div class="team-role">Associada</div>
-      <div class="team-area">Direito do Agronegócio</div>
-      <div class="team-oab">OAB/MT 00.000</div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════════════
-         PERFIL 4 — ASSOCIADA: Dra. Ataynara Rodrigues Marcelino Bomfim
-         • data-photo-url  → ataynara-bomfim.jpeg
-         ═══════════════════════════════════════════════════ -->
-    <div class="team-card reveal" style="transition-delay:120ms"
-      data-name="Dra. Ataynara Rodrigues Marcelino Bomfim"
-      data-role="Associada"
-      data-oab="OAB/MT 00.000"
-      data-photo="Foto — Ataynara Bomfim"
-      data-photo-url="https://pfkysmpmoxpzncdifawd.supabase.co/storage/v1/object/public/publication-images/assets/ataynara-bomfim.jpeg"
-      data-areas="Direito do Trabalho,Contencioso Civil"
-      data-bio="Atua na área trabalhista com foco em assessoria preventiva e contenciosa. Experiência em defesa patronal, negociações coletivas, compliance trabalhista e representação em processos judiciais e administrativos."
-      data-email="contato@mamusbomfim.com">
-      <div class="team-card-img">
-        <div class="img-slot">
-          <svg class="img-slot-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span class="img-slot-label">Foto — Ataynara Bomfim</span>
-        </div>
-        <div class="team-card-overlay">
-          <div class="team-card-overlay-text">Ver Perfil →</div>
-        </div>
-      </div>
-      <div class="team-name">Dra. Ataynara Rodrigues Marcelino Bomfim</div>
-      <div class="team-role">Associada</div>
-      <div class="team-area">Direito do Trabalho</div>
-      <div class="team-oab">OAB/MT 00.000</div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════════════
-         PERFIL 5 — ASSOCIADO: Dr. Hallison Fernando Nunes Carvalho
-         • data-photo-url  → halisson-fernando.jpeg
-         ═══════════════════════════════════════════════════ -->
-    <div class="team-card reveal" style="transition-delay:240ms"
-      data-name="Dr. Hallison Fernando Nunes Carvalho"
-      data-role="Associado"
-      data-oab="OAB/MT 00.000"
-      data-photo="Foto — Hallison Carvalho"
-      data-photo-url="https://pfkysmpmoxpzncdifawd.supabase.co/storage/v1/object/public/publication-images/assets/halisson-fernando.jpeg"
-      data-areas="Direito Imobiliário,Contencioso Civil e Contratos"
-      data-bio="Especialista em operações imobiliárias, com experiência em estruturação de negócios, due diligence, regularização fundiária e contratos de compra e venda, locação e incorporação. Presta assessoria completa a incorporadoras, construtoras e investidores do setor."
-      data-email="contato@mamusbomfim.com">
-      <div class="team-card-img">
-        <div class="img-slot">
-          <svg class="img-slot-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span class="img-slot-label">Foto — Hallison Carvalho</span>
-        </div>
-        <div class="team-card-overlay">
-          <div class="team-card-overlay-text">Ver Perfil →</div>
-        </div>
-      </div>
-      <div class="team-name">Dr. Hallison Fernando Nunes Carvalho</div>
-      <div class="team-role">Associado</div>
-      <div class="team-area">Direito Imobiliário</div>
-      <div class="team-oab">OAB/MT 00.000</div>
     </div>
   </div>
 </section>
@@ -2044,6 +1823,254 @@ Pós-graduada em Direito Processual Civil pela Escola Damásio, 2025."
   </div>
 </section>
 
+<!-- ═══════ AREAS ═══════ -->
+<section class="section-full areas-section" id="areas">
+  <div class="areas-header" style="padding: 0 48px;">
+    <div class="section-label reveal" style="justify-content:center">Expertise</div>
+    <h2 class="section-title reveal" style="text-align:center; transition-delay:120ms">
+      Áreas de <em>Atuação</em>
+    </h2>
+  </div>
+  <div class="areas-grid">
+    <div class="area-card reveal" style="transition-delay:0ms">
+      <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 12l10 5 10-5"/><path d="M7 21V10"/><path d="M17 21V10"/><circle cx="12" cy="17" r="2"/></svg></div>
+      <div class="area-name">Direito do Agronegócio</div>
+      <div class="area-desc">Consultoria especializada para o setor agropecuário, contratos rurais, regularização fundiária e questões ambientais do agronegócio.</div>
+      <div class="area-arrow">→</div>
+    </div>
+    <div class="area-card reveal" style="transition-delay:80ms">
+      <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 21h18M3 7v1a3 3 0 006 0V7m0 0a3 3 0 016 0m0 0v1a3 3 0 006 0V7M6 21V10m6 11V10m6 11V10M3 7l9-4 9 4"/></svg></div>
+      <div class="area-name">Consultoria Empresarial</div>
+      <div class="area-desc">Assessoria jurídica estratégica para empresas, governança corporativa, societário, compliance e planejamento empresarial.</div>
+      <div class="area-arrow">→</div>
+    </div>
+    <div class="area-card reveal" style="transition-delay:160ms">
+      <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+      <div class="area-name">Cível e Contratos</div>
+      <div class="area-desc">Representação judicial e extrajudicial em litígios complexos, elaboração e revisão de contratos, mediação e arbitragem.</div>
+      <div class="area-arrow">→</div>
+    </div>
+    <div class="area-card reveal" style="transition-delay:240ms">
+      <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+      <div class="area-name">Recuperação de Crédito</div>
+      <div class="area-desc">Assessoria na estruturação e recuperação de créditos do agronegócio, focada na redução preventiva dos riscos e na efetividade das retomadas.</div>
+      <div class="area-arrow">→</div>
+    </div>
+    <div class="area-card reveal" style="transition-delay:320ms">
+      <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+      <div class="area-name">Direito Imobiliário</div>
+      <div class="area-desc">Estruturação de operações imobiliárias, due diligence, regularização fundiária, contratos de compra e venda e incorporação.</div>
+      <div class="area-arrow">→</div>
+    </div>
+    <div class="area-card reveal" style="transition-delay:400ms">
+      <div class="area-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+      <div class="area-name">Compliance e Due Diligence Ambiental</div>
+      <div class="area-desc">Consultoria e Due Diligence para transações rurais, identificando e mitigando riscos regulatórios e passivos ambientais para garantir conformidade no setor agrícola.</div>
+      <div class="area-arrow">→</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PARALLAX DIVIDER ═══════ -->
+<div class="parallax-divider" id="parallaxDiv">
+  <div class="img-slot" id="parallaxBg" style="position:absolute;inset:0;width:100%;height:130%;">
+    
+    <span class="img-slot-label"></span>
+  </div>
+  <div class="parallax-divider-overlay">
+    <blockquote class="parallax-quote reveal">
+      "A justiça é a <em>constante e perpétua vontade</em> de dar a cada um o que lhe é devido."
+    </blockquote>
+  </div>
+</div>
+
+<!-- ═══════ TEAM ═══════ -->
+<section class="section" id="team">
+  <div class="team-header">
+    <div class="section-label reveal" style="justify-content:center">Profissionais</div>
+    <h2 class="section-title reveal" style="text-align:center; transition-delay:120ms">
+      Nossa <em>Equipe</em>
+    </h2>
+  </div>
+
+  <!-- Sócios Principais — 2 colunas grandes -->
+  <div class="team-socios">
+
+    <!-- ═══════════════════════════════════════════════════
+         PERFIL 1 — SÓCIO: Dr. Bruno César Mamus
+         • data-name       → Nome exibido no card e no modal
+         • data-role       → Cargo (ex: "Sócio Fundador")
+         • data-photo-url  → URL da foto no bucket Supabase (publication-images/assets/)
+         • data-areas      → Áreas de atuação (separadas por vírgula)
+         • data-bio        → Texto da biografia no modal
+         • data-email      → Email de contato
+         ═══════════════════════════════════════════════════ -->
+    <div class="team-card reveal" style="transition-delay:0ms"
+      data-name="Dr. Bruno César Mamus"
+      data-role="Sócio Fundador"
+      data-photo="Foto — Dr. Bruno César Mamus"
+      data-photo-url="https://pfkysmpmoxpzncdifawd.supabase.co/storage/v1/object/public/publication-images/assets/bruno-mamus.jpeg"
+      data-areas="Consultoria Empresarial,Direito do Agronegócio,Contencioso Civil"
+      data-bio="Bruno C. F. Mamus, advogado graduado pela Faculdade de Ciências Jurídicas e Sociais Aplicadas de Primavera do Leste (UNICEN), 2011.
+
+Pós-graduando lato sensu em Direito do Agronegócio pela Universidade Federal de Mato Grosso (UFMT), 2026.
+
+Especialista lato sensu em Direito Individual, Coletivo e Processual do Trabalho pela Universidade de Várzea Grande (UNIVAG) em convênio acadêmico com a Escola Superior da Magistratura do Trabalho da 23ª Região (Amatra-23), 2018.
+
+Especialista lato sensu em Direito Tributário pela Universidade Anhanguera-Uniderp, 2015."
+      data-email="bruno@mamusbomfim.com">
+      <div class="team-card-img">
+        <div class="img-slot">
+          <svg class="img-slot-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span class="img-slot-label">Foto — Dr. Bruno César Mamus</span>
+        </div>
+        <div class="team-card-overlay">
+          <div class="team-card-overlay-text">Ver Perfil →</div>
+        </div>
+      </div>
+      <div class="team-name" style="font-size:24px; margin-top:4px;">Dr. Bruno César Mamus</div>
+      <div class="team-role">Sócio Fundador</div>
+      <div class="team-area">Consultoria Empresarial e Agronegócio</div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════
+         PERFIL 2 — SÓCIO: Dr. André Luiz Bomfim
+         • data-photo-url  → PREENCHER com URL do bucket Supabase
+         ═══════════════════════════════════════════════════ -->
+    <div class="team-card reveal" style="transition-delay:150ms"
+      data-name="Dr. André Luiz Bomfim"
+      data-role="Sócio Fundador"
+      data-photo="Foto — Dr. André Luiz Bomfim"
+      data-photo-url="https://pfkysmpmoxpzncdifawd.supabase.co/storage/v1/object/public/publication-images/assets/andre-bomfim.jpeg"
+      data-areas="Direito do Agronegócio,Direito Empresarial,Direito Processual Civil"
+      data-bio="André Luiz Bomfim, bacharel em Direito pela Faculdade de Ciências Jurídicas e Sociais Aplicadas de Primavera do Leste (UNICEN), 2010.
+
+Pós-graduando lato sensu em Direito do Agronegócio pela Universidade Federal de Mato Grosso (UFMT), 2026.
+
+Especialista lato sensu em Direito Processual Civil pela Universidade Cândido Mendes (UCAM), 2018.
+
+Especialista lato sensu em Direito Empresarial pela Universidade Anhanguera-Uniderp, 2012.
+
+Presidente da Comissão de Direito do Agronegócio — OAB/MT, Subseção de Primavera do Leste/MT (mandato 2025-2027)."
+      data-email="andre@mamusbomfim.com">
+      <div class="team-card-img">
+        <div class="img-slot">
+          <svg class="img-slot-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span class="img-slot-label">Foto — Dr. André Luiz Bomfim</span>
+        </div>
+        <div class="team-card-overlay">
+          <div class="team-card-overlay-text">Ver Perfil →</div>
+        </div>
+      </div>
+      <div class="team-name" style="font-size:24px; margin-top:4px;">Dr. André Luiz Bomfim</div>
+      <div class="team-role">Sócio Fundador</div>
+      <div class="team-area">Agronegócio e Empresarial</div>
+    </div>
+  </div>
+
+  <!-- Associados — 3 colunas menores -->
+  <div class="team-associados">
+
+    <!-- ═══════════════════════════════════════════════════
+         PERFIL 3 — ASSOCIADA: Dra. Alexia Gomes
+         • data-photo-url  → alexia-gomes.jpeg
+         ═══════════════════════════════════════════════════ -->
+    <div class="team-card reveal" style="transition-delay:0ms"
+      data-name="Dra. Alexia Gomes"
+      data-role="Associada"
+      data-photo="Foto — Alexia Gomes"
+      data-photo-url="https://pfkysmpmoxpzncdifawd.supabase.co/storage/v1/object/public/publication-images/assets/alexia-gomes.jpeg"
+      data-areas="Direito do Agronegócio,Consultoria Empresarial"
+      data-bio="Alexia Gomes, advogada graduada em Ciências Jurídicas e Sociais Aplicadas pela UNIC - Cuiabá, 2018.
+
+Pós-graduada em Direito Penal e Processo Penal pela Escola Superior do Ministério Público, 2021.
+
+Pós-graduada em Direito Civil pela Pontifícia Universidade Católica de Minas Gerais, (Lato Sensu) 2024.
+
+Pós-graduada em Direito Processual Civil pela Escola Damásio, 2025."
+      data-email="contato@mamusbomfim.com">
+      <div class="team-card-img">
+        <div class="img-slot">
+          <svg class="img-slot-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span class="img-slot-label">Foto — Alexia Gomes</span>
+        </div>
+        <div class="team-card-overlay">
+          <div class="team-card-overlay-text">Ver Perfil →</div>
+        </div>
+      </div>
+      <div class="team-name">Dra. Alexia Gomes</div>
+      <div class="team-role">Associada</div>
+      <div class="team-area">Direito do Agronegócio</div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════
+         PERFIL 4 — ASSOCIADA: Dra. Ataynara Rodrigues Marcelino Bomfim
+         • data-photo-url  → ataynara-bomfim.jpeg
+         ═══════════════════════════════════════════════════ -->
+    <div class="team-card reveal" style="transition-delay:120ms"
+      data-name="Dra. Ataynara Rodrigues Marcelino Bomfim"
+      data-role="Associada"
+      data-photo="Foto — Ataynara Bomfim"
+      data-photo-url="https://pfkysmpmoxpzncdifawd.supabase.co/storage/v1/object/public/publication-images/assets/ataynara-bomfim.jpeg"
+      data-areas="Direito Civil,Direito do Agronegócio,Direito Previdenciário"
+      data-bio="Ataynara R. Marcelino Bomfim, bacharela em Direito pela Faculdade de Ciências Jurídicas e Sociais Aplicadas de Primavera do Leste — MT (UNIC), 2021.
+
+Pós-graduanda lato sensu em Processo Civil pela Escola Brasileira de Direito (EBRADI), 2026.
+
+Formação complementar na área do agronegócio: Agrinvest Commodities e Certificação pela Academia Brasileira de Direito do Agronegócio, 2020.
+
+Aprimoramento em Direito Previdenciário, com participação na Imersão Previdenciária — Novo Sistema Normativo Previdenciário, realizada pelo Instituto de Aperfeiçoamento em Práticas da Advocacia (IAPA), 2020."
+      data-email="contato@mamusbomfim.com">
+      <div class="team-card-img">
+        <div class="img-slot">
+          <svg class="img-slot-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span class="img-slot-label">Foto — Ataynara Bomfim</span>
+        </div>
+        <div class="team-card-overlay">
+          <div class="team-card-overlay-text">Ver Perfil →</div>
+        </div>
+      </div>
+      <div class="team-name">Dra. Ataynara Rodrigues Marcelino Bomfim</div>
+      <div class="team-role">Associada</div>
+      <div class="team-area">Direito Civil e Agronegócio</div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════
+         PERFIL 5 — ASSOCIADO: Dr. Hallison Fernando Nunes Carvalho
+         • data-photo-url  → halisson-fernando.jpeg
+         ═══════════════════════════════════════════════════ -->
+    <div class="team-card reveal" style="transition-delay:240ms"
+      data-name="Dr. Hallison Fernando Nunes Carvalho"
+      data-role="Associado"
+      data-photo="Foto — Hallison Carvalho"
+      data-photo-url="https://pfkysmpmoxpzncdifawd.supabase.co/storage/v1/object/public/publication-images/assets/halisson-fernando.jpeg"
+      data-areas="Direito Empresarial, Direito Falimentar"
+      data-bio="Hallison F. N. Carvalho, advogado graduado pela Faculdade de Ciências Jurídicas e Sociais Aplicadas de Primavera do Leste (UNIC), 2014.
+
+Pós-graduando lato sensu em Direito Civil pela Faculdade de Ciências Jurídica e Sociais Aplicadas de Primavera do Leste (Anhanguera), 2024.
+
+MBA em Direito Empresarial pelo Centro Universitário Internacional (UNINTER), 2024.
+
+Pós-graduando lato sensu em Direito Falimentar e Recuperação Judicial pelo Centro de Estudos de Especialização e Extensão (CENES), 2025.
+
+Secretário-Geral da Comissão de Estudos de Recuperação Judicial e Falência da Subseção de Primavera do Leste (MT), mandato 2025-2027"
+      data-email="contato@mamusbomfim.com">
+      <div class="team-card-img">
+        <div class="img-slot">
+          <svg class="img-slot-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span class="img-slot-label">Foto — Hallison Carvalho</span>
+        </div>
+        <div class="team-card-overlay">
+          <div class="team-card-overlay-text">Ver Perfil →</div>
+        </div>
+      </div>
+      <div class="team-name">Dr. Hallison Fernando Nunes Carvalho</div>
+      <div class="team-role">Associado</div>
+      <div class="team-area">Direito Empresarial</div>
+    </div>
+  </div>
+</section>
+
 <!-- ═══════ PROFILE MODAL ═══════ -->
 <div class="profile-modal-backdrop" id="profileBackdrop"></div>
 <button class="profile-modal-close" id="profileClose" aria-label="Fechar">
@@ -2060,7 +2087,6 @@ Pós-graduada em Direito Processual Civil pela Escola Damásio, 2025."
     <div class="profile-modal-label">Perfil Profissional</div>
     <div class="profile-modal-name" id="profileName"></div>
     <div class="profile-modal-role" id="profileRole"></div>
-    <div class="profile-modal-oab" id="profileOab"></div>
     <div class="profile-modal-divider"></div>
     <div class="profile-modal-bio" id="profileBio"></div>
     <div class="profile-modal-areas" id="profileAreas"></div>
@@ -2397,7 +2423,6 @@ Pós-graduada em Direito Processual Civil pela Escola Damásio, 2025."
     // Populate modal from data attributes
     document.getElementById('profileName').textContent  = card.dataset.name;
     document.getElementById('profileRole').textContent   = card.dataset.role;
-    document.getElementById('profileOab').textContent    = card.dataset.oab;
     // Bio: converte quebras de linha em parágrafos para preservar formatação
     var bioEl = document.getElementById('profileBio');
     var rawBio = card.dataset.bio || '';
