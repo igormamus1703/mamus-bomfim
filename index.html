@@ -737,7 +737,7 @@ body::before {
   background: #25d366; color: #fff;
   transform: scale(1.15);
 }
-.contact-images .img-slot:first-child { aspect-ratio: 16/10; }
+/* .contact-images .img-slot:first-child { aspect-ratio: 16/10; } */
 .contact-images-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .contact-images-row .img-slot { aspect-ratio: 4/3; }
 
@@ -1570,9 +1570,43 @@ body::before {
 }
 
 /* ═══════════════════════════════════════════════════════
-   CONTACT IMAGES — ensure img-slots have height when empty
+   CONTACT IMAGES — show full photo with stylized gold frame
    ═══════════════════════════════════════════════════════ */
-.contact-images > .img-slot { aspect-ratio: 16/10; }
+.contact-images { position: relative; }
+.contact-images > .img-slot {
+  aspect-ratio: 3/4;
+  background: linear-gradient(135deg, #0a0a14 0%, #060612 100%);
+  border: 1px solid var(--gold-line);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(184,151,106,0.05);
+}
+/* Display full photo (no crop) */
+.contact-images .img-slot img.img-slot-photo {
+  object-fit: contain;
+  object-position: center center;
+}
+/* Decorative gold corner accents framing the photo */
+.contact-images::before,
+.contact-images::after {
+  content: '';
+  position: absolute;
+  width: 44px; height: 44px;
+  z-index: 4; pointer-events: none;
+  transition: width 0.6s var(--ease-out), height 0.6s var(--ease-out);
+}
+.contact-images::before {
+  top: -10px; left: -10px;
+  border-top: 1px solid var(--gold);
+  border-left: 1px solid var(--gold);
+}
+.contact-images::after {
+  bottom: -10px; right: -10px;
+  border-bottom: 1px solid var(--gold);
+  border-right: 1px solid var(--gold);
+}
+.contact-images:hover::before,
+.contact-images:hover::after {
+  width: 64px; height: 64px;
+}
 
 /* ═══════════════════════════════════════════════════════
    TABLET PORTRAIT (≤768px)
@@ -1988,7 +2022,7 @@ Pós-graduada em Direito Penal e Processo Penal pela Escola Superior do Ministé
 Pós-graduada em Direito Civil pela Pontifícia Universidade Católica de Minas Gerais, (Lato Sensu) 2024.
 
 Pós-graduada em Direito Processual Civil pela Escola Damásio, 2025."
-      data-email="contato@mamusbomfim.com">
+      data-email="alexia@mamusbomfim.com">
       <div class="team-card-img">
         <div class="img-slot">
           <svg class="img-slot-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
@@ -2020,7 +2054,7 @@ Pós-graduanda lato sensu em Processo Civil pela Escola Brasileira de Direito (E
 Formação complementar na área do agronegócio: Agrinvest Commodities e Certificação pela Academia Brasileira de Direito do Agronegócio, 2020.
 
 Aprimoramento em Direito Previdenciário, com participação na Imersão Previdenciária — Novo Sistema Normativo Previdenciário, realizada pelo Instituto de Aperfeiçoamento em Práticas da Advocacia (IAPA), 2020."
-      data-email="contato@mamusbomfim.com">
+      data-email="ataynara@mamusbomfim.com">
       <div class="team-card-img">
         <div class="img-slot">
           <svg class="img-slot-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
@@ -2054,7 +2088,7 @@ MBA em Direito Empresarial pelo Centro Universitário Internacional (UNINTER), 2
 Pós-graduando lato sensu em Direito Falimentar e Recuperação Judicial pelo Centro de Estudos de Especialização e Extensão (CENES), 2025.
 
 Secretário-Geral da Comissão de Estudos de Recuperação Judicial e Falência da Subseção de Primavera do Leste (MT), mandato 2025-2027"
-      data-email="contato@mamusbomfim.com">
+      data-email="hallison@mamusbomfim.com">
       <div class="team-card-img">
         <div class="img-slot">
           <svg class="img-slot-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
